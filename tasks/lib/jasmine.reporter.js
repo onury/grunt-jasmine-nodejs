@@ -33,11 +33,25 @@ module.exports = (function () {
         return newArr.join('\n');
     }
 
-    var noop = function () {},
-        noopTimer = {
-            start: noop,
-            elapsed: function () { return 0; }
+    //----------------------------
+    //  CLASS: Timer
+    //----------------------------
+
+    function Timer() {
+        var startTime = 0,
+            endTime = 0;
+        this.start = function () {
+            startTime = Date.now();
         };
+        this.stop = function () {
+            endTime = Date.now();
+        };
+        this.elapsed = function () {
+            this.stop();
+            var t = (endTime - startTime) / 1000;
+            return t.toFixed(3);
+        };
+    }
 
     //----------------------------
     //  CLASS: JasmineReporter
@@ -46,8 +60,8 @@ module.exports = (function () {
     function JasmineReporter(options) {
         var print = options.print,
             showColors = options.showColors || false,
-            onComplete = options.onComplete || noop,
-            timer = options.timer || noopTimer,
+            onComplete = options.onComplete || function () {},
+            timer = options.timer || new Timer(),
             jasmineCorePath = options.jasmineCorePath,
             suiteCount,
             specCount,
@@ -185,7 +199,7 @@ module.exports = (function () {
             }
 
             printNewline();
-            var seconds = timer.elapsed() / 1000;
+            var seconds = timer.elapsed(); // / 1000;
             print('Finished in ' + seconds + ' ' + plural('second', seconds));
             printNewline();
             printNewline();

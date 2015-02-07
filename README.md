@@ -81,5 +81,8 @@ grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
 ## Changelog
 
+ - v0.3.1 (2015-02-07)  
+    Fixed timer (zero elapsed time) issue in `jasmine.reporter.js`.  
+
  - v0.3.0 (2015-02-07)  
-    Update Jasmine-core to latest version (2.2.1). Added reporter for Jasmine output.
+    Updated Jasmine-core to latest version (2.2.1). Added reporter for Jasmine output.
