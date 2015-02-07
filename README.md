@@ -6,6 +6,8 @@ Jasmine Grunt (multi) task for NodeJS. Supports the latest Jasmine (v2.x) featur
 > Author: Onur Yıldırım (onury) © 2015  
 > Licensed under the MIT License.  
 
+[Example Screenshot](https://raw.github.com/onury/grunt-jasmine-nodejs/master/screenshots/success-pending.jpg)
+
 ## Getting Started
 This plugin requires Grunt `^0.4.5`
 
