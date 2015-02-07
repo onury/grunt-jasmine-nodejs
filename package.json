@@ -1,0 +1,47 @@
+{
+  "name": "grunt-jasmine-nodejs",
+  "version": "0.3.0",
+  "description": "Jasmine Grunt task for NodeJS. Supports latest Jasmine features such as fdescribe, fit, beforeAll, afterAll, etc...",
+  "author": {
+    "name": "Onur Yıldırım",
+    "email": "onur@cutepilot.com"
+  },
+  "scripts": {},
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onury/grunt-jasmine-nodejs"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onury/grunt-jasmine-nodejs/issues"
+  },
+  "homepage": "https://github.com/onury/grunt-jasmine-nodejs",
+  "keywords": [
+    "jasmine",
+    "grunt",
+    "gruntplugin",
+    "node",
+    "task",
+    "runner",
+    "spec",
+    "test",
+    "edge",
+    "2"
+  ],
+  "files": [
+    "tasks",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "jasmine": "^2.2.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  },
+  "peerDependencies": {
+    "grunt": "^0.4.5"
+  }
+}

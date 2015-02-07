@@ -1,0 +1,22 @@
+# Config for grunt-jasmine-nodejs
+# https://github.com/onury/grunt-jasmine-nodejs
+{
+    # task specific (default) options
+    options: {
+        showColors: true,
+        specNameSuffix: 'spec.js', # also accepts an array
+        helperNameSuffix: 'helper.js',
+        useHelpers: true
+    },
+    your_target: {
+        # target specific options
+        options: {
+            useHelpers: false
+        },
+        # spec files
+        specs: [
+            "test/**"
+        ],
+        helpers: []
+    }
+}
