@@ -75,8 +75,10 @@ grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
 ## Changelog
 
- * 2015-02-07   v0.3.0   Update Jasmine-core to latest version (2.2.1). Added reporter for Jasmine output.
+ - v0.3.0 (2015-02-07)
+    Update Jasmine-core to latest version (2.2.1). Added reporter for Jasmine output.
 
 ---
 
 Author: Onur Yıldırım (@onury)
+License: MIT
