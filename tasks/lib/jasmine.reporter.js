@@ -61,7 +61,7 @@ module.exports = (function () {
         var print = options.print,
             showColors = options.showColors || false,
             onComplete = options.onComplete || function () {},
-            timer = options.timer || new Timer(),
+            timer = new Timer(), // options.timer || new Timer(),
             jasmineCorePath = options.jasmineCorePath,
             suiteCount,
             specCount,
