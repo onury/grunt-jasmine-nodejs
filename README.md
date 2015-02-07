@@ -1,10 +1,10 @@
 # grunt-jasmine-nodejs
 
-> Jasmine Grunt (multi) task for NodeJS. Supports the latest Jasmine (v2.x) features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...  
->   
-> Version: 0.3.0
-> Author: Onur Yıldırım (onury) © 2015
-> Licensed under the MIT License.
+Jasmine Grunt (multi) task for NodeJS. Supports the latest Jasmine (v2.x) features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...  
+  
+> Version: 0.3.0  
+> Author: Onur Yıldırım (onury) © 2015  
+> Licensed under the MIT License.  
 
 ## Getting Started
 This plugin requires Grunt `^0.4.5`
