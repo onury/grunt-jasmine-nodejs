@@ -39,7 +39,7 @@ module.exports = function (grunt) {
             },
             onComplete: function (passed) {
                 if (!passed) {
-                    grunt.fail.error('Test(s) Failed!');
+                    grunt.fail.fatal('Test(s) Failed!');
                 } else {
                     grunt.log.ok('Successful!');
                 }
