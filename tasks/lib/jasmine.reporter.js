@@ -62,7 +62,7 @@ module.exports = (function () {
             showColors = options.showColors || false,
             onComplete = options.onComplete || function () {},
             timer = new Timer(), // options.timer || new Timer(),
-            jasmineCorePath = options.jasmineCorePath,
+            jasmineCorePath = '/node_modules/jasmine/node_modules/jasmine-core/',
             suiteCount,
             specCount,
             failureCount,

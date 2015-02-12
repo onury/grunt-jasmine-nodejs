@@ -2,7 +2,7 @@
 
 Jasmine Grunt (multi) task for NodeJS. Supports the latest Jasmine (v2.x) features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...  
   
-> Version: 0.3.3  
+> Version: 0.3.4  
 > Author: Onur Yıldırım (onury) © 2015  
 > Licensed under the MIT License.  
 
@@ -81,7 +81,8 @@ grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
 ## Changelog
 
- - v0.3.3 (2015-02-12)  
+ - v0.3.4 (2015-02-12)  
+    Cleaner error stacks. Filtered out lines with jasmine-core path.
     Fixed a typo that caused the task to throw a `TypeError` when a test fails.
  
  - v0.3.1 (2015-02-07)  
