@@ -82,11 +82,11 @@ grunt.loadNpmTasks('grunt-jasmine-nodejs');
 ## Changelog
 
  - v0.3.4 (2015-02-12)  
-    Cleaner error stacks. Filtered out lines with jasmine-core path.
-    Fixed a typo that caused the task to throw a `TypeError` when a test fails.
+    Cleaner error stacks. Filtered out lines with jasmine-core path.  
+    Fixed a typo that caused the task to throw a `TypeError` when a test fails.  
  
  - v0.3.1 (2015-02-07)  
     Fixed timer (zero elapsed time) issue in `jasmine.reporter.js`.  
 
  - v0.3.0 (2015-02-07)  
-    Updated Jasmine-core to latest version (2.2.1). Added reporter for Jasmine output.
+    Updated Jasmine-core to latest version (2.2.1). Added reporter for Jasmine output.  
