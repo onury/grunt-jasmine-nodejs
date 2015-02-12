@@ -38,9 +38,7 @@ module.exports = function (grunt) {
                 grunt.log.write.apply(this, arguments);
             },
             onComplete: function (passed) {
-                if (!passed) {
-                    grunt.fail.fatal('Test(s) Failed!');
-                } else {
+                if (passed) {
                     grunt.log.ok('Successful!');
                 }
                 taskComplete(passed);
