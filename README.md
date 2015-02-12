@@ -81,6 +81,9 @@ grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
 ## Changelog
 
+ - v0.3.3 (2015-02-12)  
+    Fixed a typo that caused the task to throw a `TypeError` when a test fails.
+ 
  - v0.3.1 (2015-02-07)  
     Fixed timer (zero elapsed time) issue in `jasmine.reporter.js`.  
 
