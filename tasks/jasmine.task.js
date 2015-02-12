@@ -23,10 +23,7 @@ module.exports = function (grunt) {
             jasmine = new Jasmine();
 
         options = task.options({
-            forceExit: true,
             showColors: true,
-            captureExceptions: true,
-            includeStackTrace: true,
             specNameSuffix: 'spec.js', // string or array
             helperNameSuffix: 'helper.js',
             useHelpers: false

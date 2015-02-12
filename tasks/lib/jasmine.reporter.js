@@ -1,8 +1,9 @@
 /*jslint node:true, devel:false, nomen:true, regexp:true, unparam:true, vars:true, plusplus:true */
 
 /**
- *  Jasmine Reporter. (based on default reporter)
+ *  Jasmine.Reporter (based on default reporter)
  *  @author   Onur Yıldırım (onur@cutepilot.com)
+ *  @version  0.6.2 (2015-02-12)
  */
 module.exports = (function () {
     'use strict';
@@ -31,6 +32,16 @@ module.exports = (function () {
             newArr.push(repeat(' ', spaces).join('') + lines[i]);
         }
         return newArr.join('\n');
+    }
+
+    function filterStack(stack) {
+        var jasmineCorePath = '/node_modules/jasmine/node_modules/jasmine-core/';
+        var filteredStack = stack.split('\n')
+            .filter(function (stackLine) {
+                return stackLine.indexOf(jasmineCorePath) === -1;
+            })
+            .join('\n');
+        return filteredStack;
     }
 
     //----------------------------
@@ -62,18 +73,11 @@ module.exports = (function () {
             showColors = options.showColors || false,
             onComplete = options.onComplete || function () {},
             timer = new Timer(), // options.timer || new Timer(),
-            jasmineCorePath = '/node_modules/jasmine/node_modules/jasmine-core/',
             suiteCount,
             specCount,
             failureCount,
             failedSpecs = [],
             pendingSpecs = [],
-            ansi = {
-                green: '\x1B[32m',
-                red: '\x1B[31m',
-                yellow: '\x1B[33m',
-                none: '\x1B[0m'
-            },
             failedSuites = [],
             failedExpects = [],
             passedExpects = [];
@@ -82,34 +86,35 @@ module.exports = (function () {
         //  HELPER METHODS
         //----------------------------
 
+        function fnStyle(open) {
+            var close = '\x1B[0m';
+            return function (str) {
+                return showColors ? (open + str + close) : str;
+            };
+        }
+        // ansi styles
+        var green = fnStyle('\x1B[32m'),
+            red = fnStyle('\x1B[31m'),
+            yellow = fnStyle('\x1B[33m'),
+            // blue = fnStyle('\x1B[34m'),
+            cyan = fnStyle('\x1B[36m'),
+            underline = fnStyle('\x1B[4m');
+
         function printNewline() {
             print('\n');
         }
 
-        function colored(color, str) {
-            return showColors ? (ansi[color] + str + ansi.none) : str;
-        }
-
-        function filterStack(stack) {
-            var filteredStack = stack.split('\n')
-                .filter(function (stackLine) {
-                    return stackLine.indexOf(jasmineCorePath) === -1;
-                })
-                .join('\n');
-            return filteredStack;
-        }
-
         function specFailureDetails(result, failedSpecNumber) {
             printNewline();
-            print(failedSpecNumber + ') ');
-            print(result.fullName);
+            print(red(failedSpecNumber + ') '));
+            print(cyan(result.fullName));
             var i, failedExpectation;
             for (i = 0; i < result.failedExpectations.length; i++) {
                 failedExpectation = result.failedExpectations[i];
                 printNewline();
                 print(indent('Message:', 2));
                 printNewline();
-                print(colored('red', indent(failedExpectation.message, 4)));
+                print(red(indent(failedExpectation.message, 4)));
                 printNewline();
                 print(indent('Stack:', 2));
                 printNewline();
@@ -122,9 +127,9 @@ module.exports = (function () {
             var i;
             for (i = 0; i < result.failedExpectations.length; i++) {
                 printNewline();
-                print(colored('red', 'An error was thrown in an afterAll'));
+                print(red('An error was thrown in an afterAll'));
                 printNewline();
-                print(colored('red', 'AfterAll ' + result.failedExpectations[i].message));
+                print(red('AfterAll ' + result.failedExpectations[i].message));
 
             }
             printNewline();
@@ -133,14 +138,14 @@ module.exports = (function () {
         function pendingSpecDetails(result, pendingSpecNumber) {
             printNewline();
             printNewline();
-            print(pendingSpecNumber + ') ');
-            print(result.fullName);
+            print(yellow(pendingSpecNumber + ') '));
+            print(cyan(result.fullName));
             printNewline();
             var pendingReason = "No reason given";
             if (result.pendingReason && result.pendingReason !== '') {
                 pendingReason = result.pendingReason;
             }
-            print(indent(colored('yellow', pendingReason), 2));
+            print(indent(yellow(pendingReason), 2));
             printNewline();
         }
 
@@ -161,15 +166,17 @@ module.exports = (function () {
             printNewline();
             printNewline();
             if (failedSpecs.length > 0) {
-                print('Failures:');
+                print(red(underline('Failed Specs')) + red(':'));
+                printNewline();
             }
             var i;
             for (i = 0; i < failedSpecs.length; i++) {
                 specFailureDetails(failedSpecs[i], i + 1);
             }
+            printNewline();
 
             if (pendingSpecs.length > 0) {
-                print("Pending:");
+                print(yellow(underline('Pending Specs')) + yellow(':'));
             }
             for (i = 0; i < pendingSpecs.length; i++) {
                 pendingSpecDetails(pendingSpecs[i], i + 1);
@@ -180,7 +187,7 @@ module.exports = (function () {
 
                 var assertCount = passedExpects.length + failedExpects.length,
                     f = failedExpects.length + ' ' + plural('failure', failedExpects.length);
-                f = failedExpects.length > 0 ? colored('red', f) : f;
+                f = failedExpects.length > 0 ? red(f) : f;
 
                 var counts = suiteCount + ' ' + plural('suite', suiteCount) + ', ' +
                     specCount + ' ' + plural('spec', specCount) + ', ' +
@@ -190,7 +197,7 @@ module.exports = (function () {
                     f;
 
                 if (pendingSpecs.length) {
-                    counts += ', ' + pendingSpecs.length + ' pending ' + plural('spec', pendingSpecs.length);
+                    counts += ', ' + yellow(pendingSpecs.length + ' pending ' + plural('spec', pendingSpecs.length));
                 }
 
                 print(counts);
@@ -219,19 +226,19 @@ module.exports = (function () {
 
             if (result.status === 'pending') {
                 pendingSpecs.push(result);
-                print(colored('yellow', '•'));
+                print(yellow('•'));
                 return;
             }
 
             if (result.status === 'passed') {
-                print(colored('green', '∙')); // '✓'
+                print(green('∙')); // '✓'
                 return;
             }
 
             if (result.status === 'failed') {
                 failureCount++;
                 failedSpecs.push(result);
-                print(colored('red', ' ✕ '));
+                print(red(' ✕ '));
             }
         };
 
