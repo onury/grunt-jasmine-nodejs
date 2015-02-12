@@ -1,6 +1,6 @@
 {
   "name": "grunt-jasmine-nodejs",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Jasmine Grunt task for NodeJS. Supports latest Jasmine features such as fdescribe, fit, beforeAll, afterAll, etc...",
   "author": {
     "name": "Onur Yıldırım",
