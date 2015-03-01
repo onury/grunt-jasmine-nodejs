@@ -6,17 +6,20 @@
         showColors: true,
         specNameSuffix: 'spec.js', # also accepts an array
         helperNameSuffix: 'helper.js',
-        useHelpers: true
+        useHelpers: false,
+        verboseReport: true
     },
     your_target: {
         # target specific options
         options: {
-            useHelpers: false
+            useHelpers: true
         },
         # spec files
         specs: [
             "test/**"
         ],
-        helpers: []
+        helpers: [
+            "test/helpers/**"
+        ]
     }
 }

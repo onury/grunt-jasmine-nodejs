@@ -20,23 +20,25 @@
             calculator = new Calculator();
         });
 
-        describe('Test Suite: Calculator', function () {
-            it('should add numbers', function () {
-                var result = calculator.add(a, b);
-                expect(result).toEqual(12);
-            });
-            it('should subtract numbers', function () {
-                var result = calculator.subtract(b, a);
-                expect(result).toEqual(-8);
-            });
-            it('should divide numbers', function () {
-                var result = calculator.divide(a, b);
-                expect(result).toEqual(5);
-            });
-            it('should multiply numbers', function () {
-                var result = calculator.multiply(a, b);
-                expect(result).toEqual(20);
-            });
+        it('should add numbers', function () {
+            var result = calculator.add(a, b);
+            expect(result).toEqual(12);
+            // this is a custom matcher implemented within our helper.
+            expect(result).toBePositive();
+        });
+        it('should subtract numbers', function () {
+            var result = calculator.subtract(b, a);
+            expect(result).toEqual(-8);
+            // this is another custom matcher implemented within our helper.
+            expect(result).toBeNegative();
+        });
+        it('should divide numbers', function () {
+            var result = calculator.divide(a, b);
+            expect(result).toEqual(5);
+        });
+        it('should multiply numbers', function () {
+            var result = calculator.multiply(a, b);
+            expect(result).toEqual(20);
         });
 
     });

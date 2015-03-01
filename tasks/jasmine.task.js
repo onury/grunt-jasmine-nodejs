@@ -12,25 +12,62 @@ module.exports = function (grunt) {
         path = require('path'),
         _ = grunt.util._;
 
+    //-------------------------------------
+    //  HELPER METHODS
+    //-------------------------------------
+
+    function ensureArray(value, delim) {
+        return !_.isArray(value)
+            ? (value || '').split(delim)
+            : value;
+    }
+
+    function hasSuffix(suffixes, filePath) {
+        return _.some(suffixes, function (suffix) {
+            return _.endsWith(filePath.toLowerCase(), suffix.toLowerCase());
+        });
+    }
+
+    function expand(glob, suffixes) {
+        var options = {
+            // matchBase: true,
+            filter: function (filePath) {
+                return grunt.file.isFile(filePath)
+                    && hasSuffix(suffixes, filePath.toLowerCase());
+            }
+        };
+        // filter and expand glob
+        var files = grunt.file.expand(options, glob);
+        // resolve file paths
+        return _.map(files, function (file) {
+            return path.resolve(file);
+        });
+    }
+
+    //-------------------------------------
+    //  TASK DEFINITION
+    //-------------------------------------
+
     grunt.registerMultiTask('jasmine_nodejs', 'Jasmine Grunt Task for NodeJS.', function () {
         var task = this,
             // Mark the task as async
             taskComplete = task.async(),
             conf = grunt.config.get([this.name, this.target]),
             options,
-            specsGlob = conf.specs || [],
-            helpersGlob = conf.helpers || [],
             jasmine = new Jasmine();
 
         options = task.options({
             showColors: true,
             specNameSuffix: 'spec.js', // string or array
             helperNameSuffix: 'helper.js',
-            useHelpers: false
+            useHelpers: false,
+            verboseReport: true
         });
 
+        // Configure Reporter
         var reporterOptions = {
             showColors: options.showColors,
+            verboseReport: options.verboseReport,
             print: function () {
                 grunt.log.write.apply(this, arguments);
             },
@@ -42,47 +79,22 @@ module.exports = function (grunt) {
             }
         };
         // jasmine.configureDefaultReporter(reporterOptions);
-        var EdgeReporter = require('./lib/jasmine.reporter'),
-            reporter = new EdgeReporter(reporterOptions);
+        var JasmineReporter = require('./lib/jasmine.reporter'),
+            reporter = new JasmineReporter(reporterOptions);
         jasmine.addReporter(reporter);
 
-        function ensureArray(value, delim) {
-            return !_.isArray(value)
-                ? value.split(delim)
-                : value;
-        }
-
-        var suffixes = ensureArray(options.specNameSuffix, ',');
-        if (options.useHelpers && options.helperNameSuffix
-                && (_.isArray(helpersGlob) && helpersGlob.length > 0)) {
-            suffixes.concat(ensureArray(options.helperNameSuffix, ','));
-        }
-
-        function hasSuffix(filePath) {
-            return _.some(suffixes, function (suffix) {
-                return _.endsWith(filePath.toLowerCase(), suffix.toLowerCase());
-            });
-        }
-
-        var expandOptions = {
-                // matchBase: true,
-                filter: function (filePath) {
-                    return grunt.file.isFile(filePath)
-                        && hasSuffix(filePath.toLowerCase());
-                }
-            },
-            specFiles = grunt.file.expand(expandOptions, specsGlob);
-        specFiles = _.map(specFiles, function (file) {
-            return path.resolve(file);
-        });
+        // Spec files
+        var specSuffixes = ensureArray(options.specNameSuffix, ','),
+            specFiles = expand(conf.specs || [], specSuffixes);
         grunt.verbose.writeln('Spec Files:\n', specFiles);
 
-        // we could also do:
-        // jasmine.loadConfig({
-        //     spec_dir: './',
-        //     spec_files: specFiles,
-        //     helpers: helperFiles
-        // });
+        // Helper files
+        if (options.useHelpers && options.helperNameSuffix) {
+            var helperSuffixes = ensureArray(options.helperNameSuffix, ','),
+                helperFiles = expand(conf.helpers || [], helperSuffixes);
+            grunt.verbose.writeln('Helper Files:\n', helperFiles);
+            specFiles = specFiles.concat(helperFiles);
+        }
 
         // set `.specFiles` property instead of `jasmine.execute(specFiles)`
         // to prevent unnecessary process.

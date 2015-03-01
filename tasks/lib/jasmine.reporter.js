@@ -3,7 +3,7 @@
 /**
  *  Jasmine.Reporter (based on default reporter)
  *  @author   Onur Yıldırım (onur@cutepilot.com)
- *  @version  0.6.2 (2015-02-12)
+ *  @version  0.6.2 (2015-03-01)
  */
 module.exports = (function () {
     'use strict';
@@ -71,6 +71,7 @@ module.exports = (function () {
     function JasmineReporter(options) {
         var print = options.print,
             showColors = options.showColors || false,
+            verboseReport = options.verboseReport || false,
             onComplete = options.onComplete || function () {},
             timer = new Timer(), // options.timer || new Timer(),
             suiteCount,
@@ -130,7 +131,7 @@ module.exports = (function () {
                 print(red('An error was thrown in an afterAll'));
                 printNewline();
                 print(red('AfterAll ' + result.failedExpectations[i].message));
-
+                console.log(result.failedExpectations[i]);
             }
             printNewline();
         }
@@ -140,12 +141,53 @@ module.exports = (function () {
             printNewline();
             print(yellow(pendingSpecNumber + ') '));
             print(cyan(result.fullName));
-            printNewline();
-            var pendingReason = "No reason given";
+
+            var pendingReason = ''; // 'No reason given';
             if (result.pendingReason && result.pendingReason !== '') {
                 pendingReason = result.pendingReason;
+                printNewline();
+                print(indent(yellow('Reason: ' + pendingReason), 4));
+                // printNewline();
             }
-            print(indent(yellow(pendingReason), 2));
+        }
+
+        var suiteList = {};
+        function current() {
+            if (!suiteList[suiteCount]) {
+                suiteList[suiteCount] = { specs: [] };
+            }
+            return suiteList[suiteCount];
+        }
+
+        function fullReport() {
+            if (!verboseReport || !suiteList) { return; }
+            printNewline();
+            print(cyan(underline('Test Suites')) + cyan(':'));
+            printNewline();
+
+            var s, c;
+            Object.keys(suiteList).forEach(function (i, sIndex) {
+                c = sIndex + 1;
+                s = suiteList[i];
+                printNewline();
+                print(indent(cyan(c + ') ' + s.suite.description), 0));
+                printNewline();
+                printNewline();
+                s.specs.forEach(function (spec, index) {
+                    switch (spec.status) {
+                    case 'pending':
+                        print(indent(yellow('• ' + spec.description), 2));
+                        break;
+                    case 'failed':
+                        print(indent(red('✕ ' + spec.description), 2));
+                        break;
+                    case 'passed':
+                        print(indent(green('✓ ' + spec.description), 2));
+                        break;
+                    }
+                    printNewline();
+                });
+            });
             printNewline();
         }
 
@@ -159,13 +201,17 @@ module.exports = (function () {
             failureCount = 0;
             print('Executing specs...');
             printNewline();
+            printNewline();
             timer.start();
         };
 
         this.jasmineDone = function () {
             printNewline();
-            printNewline();
+
+            fullReport();
+
             if (failedSpecs.length > 0) {
+                printNewline();
                 print(red(underline('Failed Specs')) + red(':'));
                 printNewline();
             }
@@ -173,16 +219,19 @@ module.exports = (function () {
             for (i = 0; i < failedSpecs.length; i++) {
                 specFailureDetails(failedSpecs[i], i + 1);
             }
-            printNewline();
 
-            if (pendingSpecs.length > 0) {
-                print(yellow(underline('Pending Specs')) + yellow(':'));
-            }
-            for (i = 0; i < pendingSpecs.length; i++) {
-                pendingSpecDetails(pendingSpecs[i], i + 1);
+            if (verboseReport) {
+                if (pendingSpecs.length > 0) {
+                    printNewline();
+                    print(yellow(underline('Pending Specs')) + yellow(':'));
+                }
+                for (i = 0; i < pendingSpecs.length; i++) {
+                    pendingSpecDetails(pendingSpecs[i], i + 1);
+                }
             }
 
             if (specCount > 0) {
+                printNewline();
                 printNewline();
 
                 var assertCount = passedExpects.length + failedExpects.length,
@@ -202,7 +251,7 @@ module.exports = (function () {
 
                 print(counts);
             } else {
-                print('No specs found');
+                print('No specs found.');
             }
 
             printNewline();
@@ -219,6 +268,11 @@ module.exports = (function () {
         };
 
         this.specDone = function (result) {
+            if (verboseReport) {
+                // for fullReport
+                current().specs.push(result);
+            }
+
             failedExpects = failedExpects.concat(result.failedExpectations);
             passedExpects = passedExpects.concat(result.passedExpectations);
             // console.log(passedExpects);
@@ -243,6 +297,11 @@ module.exports = (function () {
         };
 
         this.suiteDone = function (result) {
+            if (verboseReport) {
+                // for fullReport
+                current().suite = result;
+            }
+
             suiteCount++;
             if (result.failedExpectations && result.failedExpectations.length > 0) {
                 failureCount++;
