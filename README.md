@@ -87,7 +87,7 @@ grunt.loadNpmTasks('grunt-jasmine-nodejs');
 ## Changelog
 
  - v0.4.1 (2015-03-03)  
-    + Fixes for `null` stack trace & peer jasmine-core. ([PR #3](https://github.com/onury/grunt-jasmine-nodejs/pull/3) by [@fiznol](https://github.com/fiznool))
+    + Fixes for `null` stack trace & peer jasmine-core. ([PR #3](https://github.com/onury/grunt-jasmine-nodejs/pull/3) by [@fiznool](https://github.com/fiznool))
   
  - v0.4.0 (2015-03-01)  
     + Fixed a concatenation issue that would prevent helper-files from loading. (Fixes [Issue #1](https://github.com/onury/grunt-jasmine-nodejs/issues/1))  

@@ -35,9 +35,7 @@ module.exports = (function () {
     }
 
     function filterStack(stack) {
-        if(!stack) {
-            return stack;
-        }
+        if (!stack) { return stack; }
         var jasmineCorePath = '/node_modules/jasmine-core';
         var filteredStack = stack.split('\n')
             .filter(function (stackLine) {
