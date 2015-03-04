@@ -70,7 +70,7 @@ Defines a list of built-in Jasmine reporter configurations to be used. If omitte
     JUnit XML Reporter that outputs test results to a file in JUnit XML Report format. The default option values are set to create as few .xml files as possible. It is possible to save a single XML file, or an XML file for each top-level `describe`, or an XML file for each `describe` regardless of nesting.  
 
     + **savePath** — Type: `String` Default: `""`  
-    Defines the directory path to save output report files.  
+    Defines the directory path to save output report files. This directory will be automatically created if it does not already exist.  
 
     + **filePrefix** — Type: `String` Default: `"junitresults-"`  
     Defines the string value that is prepended to the XML output file. If `consolidateAll` is true, the default is simply `"junitresults"` and this becomes the actual filename, i.e. `"junitresults.xml"`.  
@@ -88,7 +88,7 @@ Defines a list of built-in Jasmine reporter configurations to be used. If omitte
     NUnit XML Reporter that outputs test results to a file in NUnit XML Report format. Allows the test results to be used in java based CI systems like Jenkins.  
 
     + **savePath** — Type: `String` Default: `""`  
-    Defines the directory path to save output report files.  
+    Defines the directory path to save output report files. This directory will be automatically created if it does not already exist.  
 
     + **filename** — Type: `String` Default: `"nunitresults.xml"`  
     Defines the name of xml output file.  
