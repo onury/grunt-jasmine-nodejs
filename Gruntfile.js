@@ -1,3 +1,5 @@
+/*jslint node:true, nomen:true, unparam:true, vars:true, plusplus:true */
+
 module.exports = function (grunt) {
     'use strict';
 

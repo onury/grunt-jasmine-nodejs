@@ -1,9 +1,9 @@
 /*jslint node:true, devel:false, nomen:true, regexp:true, unparam:true, vars:true, plusplus:true */
 
 /**
- *  Jasmine.Reporter (based on default reporter)
+ *  Console.Reporter (based on default reporter)
  *  @author   Onur Yıldırım (onur@cutepilot.com)
- *  @version  0.6.2 (2015-03-01)
+ *  @version  0.6.4 (2015-03-04)
  */
 module.exports = (function () {
     'use strict';
@@ -37,12 +37,16 @@ module.exports = (function () {
     function filterStack(stack) {
         if (!stack) { return stack; }
         var jasmineCorePath = '/node_modules/jasmine-core';
-        var filteredStack = stack.split('\n')
+        var filteredStack = String(stack).split('\n')
             .filter(function (stackLine) {
                 return stackLine.indexOf(jasmineCorePath) === -1;
             })
             .join('\n');
         return filteredStack;
+    }
+
+    function log() {
+        process.stdout.write.apply(process.stdout, arguments);
     }
 
     //----------------------------
@@ -66,13 +70,16 @@ module.exports = (function () {
     }
 
     //----------------------------
-    //  CLASS: JasmineReporter
+    //  CLASS: ConsoleReporter
     //----------------------------
 
-    function JasmineReporter(options) {
-        var print = options.print,
-            showColors = options.showColors || false,
-            verboseReport = options.verboseReport || false,
+    function ConsoleReporter(options) {
+        this.name = 'Jasmine Console Reporter';
+
+        var print = options.print || log,
+            showColors = !!options.colors,
+            verboseReport = !!options.verbose,
+            cleanStack = !!options.cleanStack,
             onComplete = options.onComplete || function () {},
             timer = new Timer(), // options.timer || new Timer(),
             suiteCount,
@@ -110,7 +117,7 @@ module.exports = (function () {
             printNewline();
             print(red(failedSpecNumber + ') '));
             print(cyan(result.fullName));
-            var i, failedExpectation;
+            var i, failedExpectation, stack;
             for (i = 0; i < result.failedExpectations.length; i++) {
                 failedExpectation = result.failedExpectations[i];
                 printNewline();
@@ -120,7 +127,10 @@ module.exports = (function () {
                 printNewline();
                 print(indent('Stack:', 2));
                 printNewline();
-                print(indent(filterStack(failedExpectation.stack), 4));
+                stack = cleanStack
+                    ? filterStack(failedExpectation.stack)
+                    : failedExpectation.stack;
+                print(indent(stack, 4));
             }
             printNewline();
         }
@@ -189,7 +199,7 @@ module.exports = (function () {
                     printNewline();
                 });
             });
-            printNewline();
+            // printNewline();
         }
 
         //----------------------------
@@ -316,6 +326,6 @@ module.exports = (function () {
     //  EXPORT
     //----------------------------
 
-    return JasmineReporter;
+    return ConsoleReporter;
 
 }());

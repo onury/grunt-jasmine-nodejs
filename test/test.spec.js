@@ -34,7 +34,7 @@
         });
         it('should divide numbers', function () {
             var result = calculator.divide(a, b);
-            expect(result).toEqual(5);
+            expect(result).toEqual(0); // should be 5 so this will throw
         });
         it('should multiply numbers', function () {
             var result = calculator.multiply(a, b);

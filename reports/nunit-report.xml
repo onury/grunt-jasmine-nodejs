@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<test-results name="Test Results" total="4" failures="1" not-run="0" date="2015-03-04" time="23:43:30">
+ <test-suite name="Test Suite: Calculator" executed="true" success="false" time="0.006">
+  <results>
+   <test-case name="should add numbers" executed="true" success="true" time="0.002">
+   </test-case>
+   <test-case name="should subtract numbers" executed="true" success="true" time="0">
+   </test-case>
+   <test-case name="should divide numbers" executed="true" success="false" time="0.002">
+    <failure>
+     <message><![CDATA[Expected 5 to equal 0.]]></message>
+     <stack-trace><![CDATA[Error: Expected 5 to equal 0.
+    at stack (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1455:17)
+    at buildExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1425:14)
+    at Spec.Env.expectationResultFactory (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:572:18)
+    at Spec.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:321:34)
+    at Expectation.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:516:21)
+    at Expectation.toEqual (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1379:12)
+    at Object.<anonymous> (/Users/oy/developer/javascript/grunt-jasmine-nodejs/test/test.spec.js:37:28)
+    at attemptSync (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1741:24)
+    at QueueRunner.run (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1729:9)
+    at QueueRunner.execute (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1714:10)]]></stack-trace>
+    </failure>
+   </test-case>
+   <test-case name="should multiply numbers" executed="true" success="true" time="0">
+   </test-case>
+  </results>
+ </test-suite>
+</test-results>
