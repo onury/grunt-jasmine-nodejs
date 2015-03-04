@@ -32,7 +32,7 @@ Task targets, files and options may be specified according to the grunt [Configu
 
 ### Options
 
-***Note**: Task options used for the default reporter (**showColors** and **verboseReport**) are **deprecated** and will be removed in a future release. Consider the new (refactored) options for `reporters.console` reporter instead.*
+*Note: Task options used for the default reporter (**showColors** and **verboseReport**) are **deprecated** and will be removed in a future release. Consider the new (refactored) options for `reporters.console` reporter instead.*
 
 #### specNameSuffix
 
