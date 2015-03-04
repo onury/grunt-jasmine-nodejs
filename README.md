@@ -170,35 +170,49 @@ To run the task:
 
 ## Changelog
 
- - **v1.0.0** (2015-03-04)  
+---
+
+- **v1.0.0** (2015-03-04)  
     + Added new reporters: JUnit XML Reporter, NUnit XML Reporter, TeamCity Reporter, TAP Reporter. (Fulfills [Issue #4](https://github.com/onury/grunt-jasmine-nodejs/issues/4)). Implemented using [jasmine-reporters](https://github.com/larrymyers/jasmine-reporters).  
     + Added new task option `reporters`. This object defines enabled reporters to be used in conjunction. See documentation.  
     + Deprecated task options: `showColors` and `verboseReport`. These are refactored under `reporters.console` object.  
     + Added new option for console reporter: `cleanStack`.  
     + Added support for adding custom reporters. See `customReporters` task option.  
     + Better output for Grunt `--verbose` command.  
-    + Code revisions and clean-up.
+    + Code revisions and clean-up.  
 
- - v0.4.1 (2015-03-03)  
+    ---
+
+- v0.4.1 (2015-03-03)  
     + Fixes for `null` stack trace & peer jasmine-core. ([PR #3](https://github.com/onury/grunt-jasmine-nodejs/pull/3) by [@fiznool](https://github.com/fiznool))  
+
+    ---
   
- - v0.4.0 (2015-03-01)  
+- v0.4.0 (2015-03-01)  
     + Fixed a concatenation issue that would prevent helper-files from loading. (Fixes [Issue #1](https://github.com/onury/grunt-jasmine-nodejs/issues/1))  
     + Added new task option `verboseReport` which reports a verbose list of all suites.  
     + Improved reporter output.  
     + Updated test example (added helper file).  
     + Code clean-up.  
+
+    ---
   
- - v0.3.5 (2015-02-12)  
+- v0.3.5 (2015-02-12)  
     + Cleaner error stacks. Filtered out lines with jasmine-core path.  
     + Fixed a typo that caused the task to throw a `TypeError` when a test fails.  
     + Better reporter console output.  
+
+    ---
   
- - v0.3.1 (2015-02-07)  
+- v0.3.1 (2015-02-07)  
     + Fixed timer (zero elapsed time) issue in `jasmine.reporter.js`.  
+
+    ---
   
- - v0.3.0 (2015-02-07)  
+- v0.3.0 (2015-02-07)  
     + Updated Jasmine-core to latest version (2.2.1).  
     + Added reporter for Jasmine output.  
+
+    ---
   
  
