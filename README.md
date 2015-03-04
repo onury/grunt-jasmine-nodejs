@@ -116,7 +116,7 @@ grunt.initConfig({
         options: {
             specNameSuffix: 'spec.js', // also accepts an array
             helperNameSuffix: 'helper.js',
-            useHelpers: false
+            useHelpers: false,
             // configure one or more built-in reporters
             reporters: {
                 console: {
