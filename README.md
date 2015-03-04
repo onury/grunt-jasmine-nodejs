@@ -170,8 +170,6 @@ To run the task:
 
 ## Changelog
 
----
-
 - **v1.0.0** (2015-03-04)  
     + Added new reporters: JUnit XML Reporter, NUnit XML Reporter, TeamCity Reporter, TAP Reporter. (Fulfills [Issue #4](https://github.com/onury/grunt-jasmine-nodejs/issues/4)). Implemented using [jasmine-reporters](https://github.com/larrymyers/jasmine-reporters).  
     + Added new task option `reporters`. This object defines enabled reporters to be used in conjunction. See documentation.  
