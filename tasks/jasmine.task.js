@@ -73,6 +73,7 @@ module.exports = function (grunt) {
             reporters: {}
             // , customReporters: []
         });
+
         var ropts = options.reporters;
 
         // HELPER METHODS
