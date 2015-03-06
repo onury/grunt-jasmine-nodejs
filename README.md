@@ -2,7 +2,7 @@
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
-> Version: 1.0.2  
+> Version: 1.0.1  
 > Author: Onur Yıldırım (onury) © 2015  
 > Licensed under the MIT License.  
 
