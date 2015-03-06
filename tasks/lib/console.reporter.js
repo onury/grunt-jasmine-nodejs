@@ -9,7 +9,8 @@ module.exports = (function () {
     'use strict';
 
     var chalk = require('chalk'),
-        // windows returns 'win32' even on 64 bit but just in case...
+        // windows returns 'win32' even on 64 bit but we still check for
+        // win64, just in case...
         isWindows = process.platform === 'win32'
             || process.platform === 'win64';
 
@@ -39,17 +40,6 @@ module.exports = (function () {
         return newArr.join('\n');
     }
 
-    function filterStack(stack) {
-        if (!stack) { return stack; }
-        var jasmineCorePath = '/node_modules/jasmine-core';
-        var filteredStack = String(stack).split('\n')
-            .filter(function (stackLine) {
-                return stackLine.indexOf(jasmineCorePath) === -1;
-            })
-            .join('\n');
-        return filteredStack;
-    }
-
     function symbol(name) {
         switch (name) {
         case 'dot':
@@ -69,6 +59,17 @@ module.exports = (function () {
 
     function log() {
         process.stdout.write.apply(process.stdout, arguments);
+    }
+
+    function filterStack(stack) {
+        if (!stack) { return stack; }
+        var jasmineCorePath = '/node_modules/jasmine-core';
+        var filteredStack = String(stack).split('\n')
+            .filter(function (stackLine) {
+                return stackLine.indexOf(jasmineCorePath) === -1;
+            })
+            .join('\n');
+        return filteredStack;
     }
 
     //----------------------------
@@ -99,7 +100,6 @@ module.exports = (function () {
         this.name = 'Jasmine Console Reporter';
 
         var print = options.print || log,
-            useColors = !!options.colors,
             verboseReport = !!options.verbose,
             cleanStack = !!options.cleanStack,
             onComplete = options.onComplete || function () {},
@@ -119,7 +119,7 @@ module.exports = (function () {
 
         function fnStyle(color) {
             return function (str) {
-                return useColors ? chalk[color](str) : str;
+                return !!options.colors ? chalk[color](str) : str;
             };
         }
 
