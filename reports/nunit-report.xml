@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<test-results name="Test Results" total="4" failures="1" not-run="0" date="2015-03-04" time="23:43:30">
- <test-suite name="Test Suite: Calculator" executed="true" success="false" time="0.006">
+<test-results name="Test Results" total="4" failures="1" not-run="0" date="2015-03-06" time="14:54:35">
+ <test-suite name="Test Suite: Calculator" executed="true" success="false" time="0.005">
   <results>
    <test-case name="should add numbers" executed="true" success="true" time="0.002">
    </test-case>

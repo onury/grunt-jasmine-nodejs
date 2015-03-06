@@ -2,7 +2,7 @@
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
-> Version: 1.0.0  
+> Version: 1.0.2  
 > Author: Onur Yıldırım (onury) © 2015  
 > Licensed under the MIT License.  
 
@@ -26,13 +26,12 @@ grunt.loadNpmTasks('grunt-jasmine-nodejs');
 
 ## jasmine_nodejs task
 
-_Run this task with the `grunt jasmine_nodejs` command._
+_Run this task with the `grunt jasmine_nodejs` command._  
+_The `--verbose` option will additionally output list of enabled reporters, spec and helper file lists._
 
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 
 ### Options
-
-**Note**: Task options used for the default reporter (**showColors** and **verboseReport**) are **deprecated** and will be removed in a future release. Consider the new (refactored) options for `reporters.console` reporter instead.
 
 #### specNameSuffix
 
@@ -64,7 +63,7 @@ Defines a list of built-in Jasmine reporter configurations to be used. If omitte
     Specifies whether to filter out lines with jasmine-core path from stacks.  
 
     + **verbose** — Type: `Boolean` Default: `true`  
-    Specifies whether to the reporter output should be verbose.  
+    Specifies whether the reporter output should be verbose.  
 
 - **reporters.junit**  
     JUnit XML Reporter that outputs test results to a file in JUnit XML Report format. The default option values are set to create as few .xml files as possible. It is possible to save a single XML file, or an XML file for each top-level `describe`, or an XML file for each `describe` regardless of nesting.  
@@ -114,8 +113,8 @@ grunt.initConfig({
     jasmine_nodejs: {
         // task specific (default) options
         options: {
-            specNameSuffix: 'spec.js', // also accepts an array
-            helperNameSuffix: 'helper.js',
+            specNameSuffix: "spec.js", // also accepts an array
+            helperNameSuffix: "helper.js",
             useHelpers: false,
             // configure one or more built-in reporters
             reporters: {
@@ -125,15 +124,15 @@ grunt.initConfig({
                     verbose: true
                 },
                 junit: {
-                    savePath: './reports',
-                    filePrefix: 'junit-report',
+                    savePath: "./reports",
+                    filePrefix: "junit-report",
                     consolidate: true,
                     useDotNotation: true
                 },
                 nunit: {
-                    savePath: './reports',
-                    filename: 'nunit-report.xml',
-                    reportName: 'Test Results'
+                    savePath: "./reports",
+                    filename: "nunit-report.xml",
+                    reportName: "Test Results"
                 },
                 teamcity: false,
                 tap: false
@@ -160,15 +159,17 @@ grunt.initConfig({
 grunt.loadNpmTasks('grunt-jasmine-nodejs');
 ```
   
-To run the task:
+_Note 1: The target-level `reporters` object will override the task-level `reporters` object all together. They will not be merged._
 
-```shell
-    $ grunt jasmine_nodejs[:your_target] [--verbose]
-```
-
-*Note: Grunt's `--verbose` option will additionally output list of enabled reporters, spec and helper file lists.*
+_Note 2: If you're migrating from v0.4.x, task options used for the default reporter (`showColors` and `verboseReport`) are DEPRECATED and will be removed in a future release. Use the new (refactored) `reporters.console.colors` and `reporters.console.verbose` options instead._
+  
 
 ## Changelog
+
+- **v1.0.1** (2015-03-06)  
+    + Fixed Console Reporter symbols and colors for Windows platforms. (Fixes [Issue #6](https://github.com/onury/grunt-jasmine-nodejs/issues/6))  
+
+    ---
 
 - **v1.0.0** (2015-03-04)  
     + Added new reporters: JUnit XML Reporter, NUnit XML Reporter, TeamCity Reporter, TAP Reporter. (Fulfills [Issue #4](https://github.com/onury/grunt-jasmine-nodejs/issues/4)). Implemented using [jasmine-reporters](https://github.com/larrymyers/jasmine-reporters).  
@@ -211,6 +212,5 @@ To run the task:
     + Updated Jasmine-core to latest version (2.2.1).  
     + Added reporter for Jasmine output.  
 
-    ---
   
  

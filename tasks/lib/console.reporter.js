@@ -3,10 +3,15 @@
 /**
  *  Console.Reporter (based on default reporter)
  *  @author   Onur Yıldırım (onur@cutepilot.com)
- *  @version  0.6.4 (2015-03-04)
+ *  @version  0.7.2 (2015-03-06)
  */
 module.exports = (function () {
     'use strict';
+
+    var chalk = require('chalk'),
+        // windows returns 'win32' even on 64 bit but just in case...
+        isWindows = process.platform === 'win32'
+            || process.platform === 'win64';
 
     //----------------------------
     //  UTILITY METHODS
@@ -45,6 +50,23 @@ module.exports = (function () {
         return filteredStack;
     }
 
+    function symbol(name) {
+        switch (name) {
+        case 'dot':
+            return isWindows ? '.' : '∙';
+        case 'dotw':
+            return isWindows ? '!' : '•';
+        case 'info':
+            return isWindows ? 'i' : 'ℹ';
+        case 'success':
+            return isWindows ? '√' : '✔'; // ✓
+        case 'warning':
+            return isWindows ? '‼' : '⚠';
+        case 'error':
+            return isWindows ? '×' : '✖'; // ✕
+        }
+    }
+
     function log() {
         process.stdout.write.apply(process.stdout, arguments);
     }
@@ -77,7 +99,7 @@ module.exports = (function () {
         this.name = 'Jasmine Console Reporter';
 
         var print = options.print || log,
-            showColors = !!options.colors,
+            useColors = !!options.colors,
             verboseReport = !!options.verbose,
             cleanStack = !!options.cleanStack,
             onComplete = options.onComplete || function () {},
@@ -95,19 +117,19 @@ module.exports = (function () {
         //  HELPER METHODS
         //----------------------------
 
-        function fnStyle(open) {
-            var close = '\x1B[0m';
+        function fnStyle(color) {
             return function (str) {
-                return showColors ? (open + str + close) : str;
+                return useColors ? chalk[color](str) : str;
             };
         }
+
         // ansi styles
-        var green = fnStyle('\x1B[32m'),
-            red = fnStyle('\x1B[31m'),
-            yellow = fnStyle('\x1B[33m'),
-            // blue = fnStyle('\x1B[34m'),
-            cyan = fnStyle('\x1B[36m'),
-            underline = fnStyle('\x1B[4m');
+        var green = fnStyle('green'),
+            red = fnStyle('red'),
+            yellow = fnStyle('yellow'),
+            // blue = fnStyle('blue'),
+            cyan = fnStyle('cyan'),
+            underline = fnStyle('underline');
 
         function printNewline() {
             print('\n');
@@ -187,13 +209,13 @@ module.exports = (function () {
                 s.specs.forEach(function (spec, index) {
                     switch (spec.status) {
                     case 'pending':
-                        print(indent(yellow('• ' + spec.description), 2));
+                        print(indent(yellow(symbol('warning') + ' ' + spec.description), 2));
                         break;
                     case 'failed':
-                        print(indent(red('✕ ' + spec.description), 2));
+                        print(indent(red(symbol('error') + ' ' + spec.description), 2));
                         break;
                     case 'passed':
-                        print(indent(green('✓ ' + spec.description), 2));
+                        print(indent(green(symbol('success') + ' ' + spec.description), 2));
                         break;
                     }
                     printNewline();
@@ -291,19 +313,19 @@ module.exports = (function () {
 
             if (result.status === 'pending') {
                 pendingSpecs.push(result);
-                print(yellow('•'));
+                print(yellow(symbol('dotw')));
                 return;
             }
 
             if (result.status === 'passed') {
-                print(green('∙')); // '✓'
+                print(green(symbol('dot')));
                 return;
             }
 
             if (result.status === 'failed') {
                 failureCount++;
                 failedSpecs.push(result);
-                print(red(' ✕ '));
+                print(red(' ' + symbol('error') + ' '));
             }
         };
 

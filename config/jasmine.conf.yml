@@ -31,7 +31,7 @@
         # list of custom Jasmine reporter objects
         customReporters: []
     },
-    your_target: {
+    all: {
         # target specific options
         options: {
             useHelpers: true
