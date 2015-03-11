@@ -2,7 +2,7 @@
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
-> Version: 1.0.1  
+> Version: 1.0.2  
 > Author: Onur Yıldırım (onury) © 2015  
 > Licensed under the MIT License.  
 
@@ -165,6 +165,11 @@ _Note 2: If you're migrating from v0.4.x, task options used for the default repo
   
 
 ## Changelog
+
+- **v1.0.2** (2015-03-11)  
+    + Fixed *undefined suite description* issue for focused specs (`fit(...)`) in Console Reporter; which was breaking the spec-run.  
+
+    ---
 
 - **v1.0.1** (2015-03-06)  
     + Fixed Console Reporter symbols and colors for Windows platforms. (Fixes [Issue #6](https://github.com/onury/grunt-jasmine-nodejs/issues/6))  
