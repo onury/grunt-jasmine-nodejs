@@ -3,7 +3,7 @@
 /**
  *  Console.Reporter (based on default reporter)
  *  @author   Onur Yıldırım (onur@cutepilot.com)
- *  @version  0.7.2 (2015-03-06)
+ *  @version  0.7.3 (2015-03-11)
  */
 module.exports = (function () {
     'use strict';
@@ -203,9 +203,12 @@ module.exports = (function () {
                 c = sIndex + 1;
                 s = suiteList[i];
                 printNewline();
-                print(indent(cyan(c + ') ' + s.suite.description), 0));
-                printNewline();
-                printNewline();
+                // suite might be undefined for focused specs: fit()
+                if (s.suite) {
+                    print(indent(cyan(c + ') ' + s.suite.description), 0));
+                    printNewline();
+                    printNewline();
+                }
                 s.specs.forEach(function (spec, index) {
                     switch (spec.status) {
                     case 'pending':

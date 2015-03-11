@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
- <testsuite name="Test Suite: Calculator" timestamp="2015-03-06T14:54:35" hostname="localhost" time="0.005" errors="0" tests="4" skipped="0" disabled="0" failures="1">
-  <testcase classname="Test Suite: Calculator" name="should add numbers" time="0.002">
+ <testsuite name="Test Suite: Calculator" timestamp="2015-03-11T23:42:07" hostname="localhost" time="0.006" errors="0" tests="4" skipped="0" disabled="0" failures="1">
+  <testcase classname="Test Suite: Calculator" name="should add numbers" time="0.001">
   </testcase>
   <testcase classname="Test Suite: Calculator" name="should subtract numbers" time="0">
   </testcase>
