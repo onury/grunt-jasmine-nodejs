@@ -167,7 +167,7 @@ _Note 2: If you're migrating from v0.4.x, task options used for the default repo
 ## Changelog
 
 - **v1.0.2** (2015-03-11)  
-    + Fixed *undefined suite description* issue for focused specs (`fit(...)`) in Console Reporter; which was breaking the spec-run. (Fixes [Issue #6](https://github.com/onury/grunt-jasmine-nodejs/issues/9))    
+    + Fixed *undefined suite description* issue for focused specs (`fit(...)`) in Console Reporter; which was breaking the spec-run. (Fixes [Issue #9](https://github.com/onury/grunt-jasmine-nodejs/issues/9))    
 
     ---
 
