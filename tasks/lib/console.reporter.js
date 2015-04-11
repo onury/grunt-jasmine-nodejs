@@ -63,7 +63,8 @@ module.exports = (function () {
 
     function filterStack(stack) {
         if (!stack) { return stack; }
-        var jasmineCorePath = '/node_modules/jasmine-core';
+        var sep = isWindows ? '\\' : '/';
+        var jasmineCorePath = sep+'node_modules'+sep+'jasmine-core';
         var filteredStack = String(stack).split('\n')
             .filter(function (stackLine) {
                 return stackLine.indexOf(jasmineCorePath) === -1;
