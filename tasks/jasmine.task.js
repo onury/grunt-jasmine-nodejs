@@ -164,10 +164,10 @@ module.exports = function (grunt) {
             addReporter(tap, 'TAP Reporter');
         }
         // We won't use terminal reporter since the default reporter is similar and better.
-        // if (ropts.terminal && !ropts.console) {
-        //     var terminal = new reporters.TerminalReporter(ropts.terminal);
-        //     addReporter(terminal, 'Terminal Reporter');
-        // }
+        if (ropts.terminal && !ropts.console) {
+            var terminal = new reporters.TerminalReporter(ropts.terminal);
+            addReporter(terminal, 'Terminal Reporter');
+        }
 
         // CUSTOM JASMINE REPORTERS
 
