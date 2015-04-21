@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<test-results name="Test Results" total="17" failures="2" not-run="7" date="2015-04-21" time="02:53:21">
+<test-results name="Test Results" total="17" failures="2" not-run="7" date="2015-04-21" time="03:24:35">
  <test-suite name="Suite 1 (Level 1)" executed="true" success="false" time="1.011">
   <results>
    <test-suite name="Suite 2 (Level 2)" executed="true" success="true" time="0.002">
     <results>
-     <test-suite name="Suite 3 (Level 3)" executed="true" success="true" time="0">
+     <test-suite name="Suite 3 (Level 3)" executed="true" success="true" time="0.001">
       <results>
       </results>
      </test-suite>
@@ -14,7 +14,7 @@
      </test-case>
     </results>
    </test-suite>
-   <test-suite name="Suite 4 (Level 2)" executed="true" success="true" time="0">
+   <test-suite name="Suite 4 (Level 2)" executed="true" success="true" time="0.001">
     <results>
     </results>
    </test-suite>
@@ -26,9 +26,9 @@
    </test-suite>
    <test-case name="Suite 1, Spec 1" executed="true" success="true" time="0.002">
    </test-case>
-   <test-case name="Suite 1, Spec 2" executed="true" success="true" time="0.001">
+   <test-case name="Suite 1, Spec 2" executed="true" success="true" time="0">
    </test-case>
-   <test-case name="Suite 1, Spec 3" executed="true" success="false" time="1.004">
+   <test-case name="Suite 1, Spec 3" executed="true" success="false" time="1.003">
     <failure>
      <message><![CDATA[Expected false to equal true.]]></message>
      <stack-trace><![CDATA[Error: Expected false to equal true.
@@ -56,7 +56,7 @@
     at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)]]></stack-trace>
     </failure>
    </test-case>
-   <test-case name="Suite 1, Spec 4" executed="false" success="true" time="0.001">
+   <test-case name="Suite 1, Spec 4" executed="false" success="true" time="0">
    </test-case>
   </results>
  </test-suite>
@@ -68,11 +68,11 @@
    </test-case>
   </results>
  </test-suite>
- <test-suite name="Calculator Suite" executed="true" success="false" time="2.006">
+ <test-suite name="Calculator Suite" executed="true" success="false" time="2.007">
   <results>
    <test-case name="should add numbers" executed="true" success="true" time="0">
    </test-case>
-   <test-case name="should execute async spec" executed="true" success="true" time="2.001">
+   <test-case name="should execute async spec" executed="true" success="true" time="2">
    </test-case>
    <test-case name="should subtract numbers" executed="true" success="true" time="0.004">
    </test-case>
