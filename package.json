@@ -44,7 +44,7 @@
   "dependencies": {
     "chalk": "^1.0.0",
     "jasmine": "^2.2.1",
-    "jasmine-reporters": "^2.0.4"
+    "jasmine-reporters": "^2.0.5"
   },
   "devDependencies": {
     "grunt": "^0.4.5"

@@ -3,30 +3,37 @@
 {
     # task specific (default) options
     options: {
-        specNameSuffix: 'spec.js', # also accepts an array
-        helperNameSuffix: 'helper.js',
+        specNameSuffix: "spec.js", # also accepts an array
+        helperNameSuffix: "helper.js",
         useHelpers: false,
         # options for built-in reporters
         reporters: {
             # console (default) reporter
             console: {
                 colors: true,
-                verbose: true,
-                cleanStack: true
+                cleanStack: 1,       # (0|false)|(1|true)|2|3
+                verbosity: 3,        # (0|false)|1|2|(3|true)
+                listStyle: "indent", # "flat"|"indent"
+                activity: true
             },
             junit: {
-                savePath: './reports',
-                filePrefix: 'junit-report',
+                savePath: "./reports",
+                filePrefix: "junit-report",
                 consolidate: true,
                 useDotNotation: true
             },
             nunit: {
-                savePath: './reports',
-                filename: 'nunit-report.xml',
+                savePath: "./reports",
+                filename: "nunit-report.xml",
                 reportName: 'Test Results'
             },
-            teamcity: false,
-            tap: false
+            terminal: {
+                color: false,
+                showStack: false,
+                verbosity: 2        # 0|1|2|3
+            },
+            teamcity: true,
+            tap: true
         },
         # list of custom Jasmine reporter objects
         customReporters: []

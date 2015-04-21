@@ -1,12 +1,82 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<test-results name="Test Results" total="4" failures="1" not-run="0" date="2015-03-11" time="23:42:07">
- <test-suite name="Test Suite: Calculator" executed="true" success="false" time="0.005">
+<test-results name="Test Results" total="17" failures="2" not-run="7" date="2015-04-21" time="02:53:21">
+ <test-suite name="Suite 1 (Level 1)" executed="true" success="false" time="1.011">
   <results>
-   <test-case name="should add numbers" executed="true" success="true" time="0.002">
+   <test-suite name="Suite 2 (Level 2)" executed="true" success="true" time="0.002">
+    <results>
+     <test-suite name="Suite 3 (Level 3)" executed="true" success="true" time="0">
+      <results>
+      </results>
+     </test-suite>
+     <test-case name="Suite 2, Spec 1" executed="true" success="true" time="0">
+     </test-case>
+     <test-case name="Suite 2, Spec 2" executed="false" success="true" time="0">
+     </test-case>
+    </results>
+   </test-suite>
+   <test-suite name="Suite 4 (Level 2)" executed="true" success="true" time="0">
+    <results>
+    </results>
+   </test-suite>
+   <test-suite name="Suite 5 (Level 2)" executed="true" success="true" time="0">
+    <results>
+     <test-case name="Suite 5, Spec 1" executed="true" success="true" time="0">
+     </test-case>
+    </results>
+   </test-suite>
+   <test-case name="Suite 1, Spec 1" executed="true" success="true" time="0.002">
    </test-case>
-   <test-case name="should subtract numbers" executed="true" success="true" time="0">
+   <test-case name="Suite 1, Spec 2" executed="true" success="true" time="0.001">
    </test-case>
-   <test-case name="should divide numbers" executed="true" success="false" time="0.002">
+   <test-case name="Suite 1, Spec 3" executed="true" success="false" time="1.004">
+    <failure>
+     <message><![CDATA[Expected false to equal true.]]></message>
+     <stack-trace><![CDATA[Error: Expected false to equal true.
+    at stack (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1455:17)
+    at buildExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1425:14)
+    at Spec.Env.expectationResultFactory (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:572:18)
+    at Spec.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:321:34)
+    at Expectation.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:516:21)
+    at Expectation.toEqual (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1379:12)
+    at Object.<anonymous> (/Users/oy/developer/javascript/grunt-jasmine-nodejs/test/nested.spec.js:16:27)
+    at attemptAsync (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1771:24)
+    at QueueRunner.run (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1726:9)
+    at QueueRunner.execute (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1714:10)]]></stack-trace>
+    </failure>
+    <failure>
+     <message><![CDATA[Expected 1 to equal 2.]]></message>
+     <stack-trace><![CDATA[Error: Expected 1 to equal 2.
+    at stack (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1455:17)
+    at buildExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1425:14)
+    at Spec.Env.expectationResultFactory (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:572:18)
+    at Spec.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:321:34)
+    at Expectation.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:516:21)
+    at Expectation.toEqual (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1379:12)
+    at null._onTimeout (/Users/oy/developer/javascript/grunt-jasmine-nodejs/test/nested.spec.js:18:27)
+    at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)]]></stack-trace>
+    </failure>
+   </test-case>
+   <test-case name="Suite 1, Spec 4" executed="false" success="true" time="0.001">
+   </test-case>
+  </results>
+ </test-suite>
+ <test-suite name="Suite 6 (Level 1)" executed="true" success="true" time="0.001">
+  <results>
+   <test-case name="Suite 6, Spec 1" executed="true" success="true" time="0.001">
+   </test-case>
+   <test-case name="Suite 6, Spec 2" executed="false" success="true" time="0">
+   </test-case>
+  </results>
+ </test-suite>
+ <test-suite name="Calculator Suite" executed="true" success="false" time="2.006">
+  <results>
+   <test-case name="should add numbers" executed="true" success="true" time="0">
+   </test-case>
+   <test-case name="should execute async spec" executed="true" success="true" time="2.001">
+   </test-case>
+   <test-case name="should subtract numbers" executed="true" success="true" time="0.004">
+   </test-case>
+   <test-case name="should divide numbers" executed="true" success="false" time="0.001">
     <failure>
      <message><![CDATA[Expected 5 to equal 0.]]></message>
      <stack-trace><![CDATA[Error: Expected 5 to equal 0.
@@ -16,13 +86,13 @@
     at Spec.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:321:34)
     at Expectation.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:516:21)
     at Expectation.toEqual (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1379:12)
-    at Object.<anonymous> (/Users/oy/developer/javascript/grunt-jasmine-nodejs/test/test.spec.js:37:28)
+    at Object.<anonymous> (/Users/oy/developer/javascript/grunt-jasmine-nodejs/test/test.spec.js:44:28)
     at attemptSync (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1741:24)
     at QueueRunner.run (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1729:9)
     at QueueRunner.execute (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1714:10)]]></stack-trace>
     </failure>
    </test-case>
-   <test-case name="should multiply numbers" executed="true" success="true" time="0">
+   <test-case name="should multiply numbers" executed="false" success="true" time="0">
    </test-case>
   </results>
  </test-suite>

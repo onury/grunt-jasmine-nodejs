@@ -2,7 +2,7 @@
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
-> Version: 1.0.2  
+> Version: 1.3.0  
 > Author: Onur Yıldırım (onury) © 2015  
 > Licensed under the MIT License.  
 
@@ -53,17 +53,25 @@ Specifies whether to execute the helper files.
 Type: `Object`  Default: `undefined`  
 Defines a list of built-in Jasmine reporter configurations to be used. If omitted, `console` reporter will be used as default. See the definitions and corresponding options for each reporter below.  
 
+> _Note that reporters producing command-line output (such as console, terminal, teamcity and tap reporters), are not allowed to run at the same time, to prevent puzzled outputs. If still enabled, only the first one (in respective order) will be used. This is not the case for reporters producing a file._  
+
 - **reporters.console**  
     The built-in default reporter that outputs the detailed test results to the console, with colors.  
 
     + **colors** — Type: `Boolean` Default: `true`  
     Specifies whether the output should have colored text.  
 
-    + **cleanStack** — Type: `Boolean` Default: `true`  
-    Specifies whether to filter out lines with jasmine-core path from stacks.  
+    + **cleanStack** — Type: `Number|Boolean` Default: `1`  
+    Specifies the filter level for the error stacks. Possible integer values: 0 to 3. Set to `1` (or `true`) to only filter out lines with jasmine-core path from stacks. Set to `2` to filter out all `node_modules` paths. Set to `3` to also filter out lines with no file path in it.  
 
-    + **verbose** — Type: `Boolean` Default: `true`  
-    Specifies whether the reporter output should be verbose.  
+    + **verbosity** — Type: `Number|Boolean` Default: `3`  
+    (_alias: `verbose`_) Specifies the verbosity level for the reporter output. Possible integer values: 0 to 3. When a `Boolean` value is passed, `true` defaults to `3` and `false` defaults to `0`.  
+
+    + **listStyle** — Type: `String` Default: `"indent"`  
+    Indicates the style of suites/specs list output. Possible values: `"flat"` or `"indent"`. Setting this to `"indent"` provides a better view especially when using nested (describe) suites. This option is only effective when verbosity level is set to `true` or `3`.  
+
+    + **activity** — Type: `Boolean` Default: `true`  
+    Specifies whether to enable the activity indicator animation that outputs the current spec that is being executed.  
 
 - **reporters.junit**  
     JUnit XML Reporter that outputs test results to a file in JUnit XML Report format. The default option values are set to create as few .xml files as possible. It is possible to save a single XML file, or an XML file for each top-level `describe`, or an XML file for each `describe` regardless of nesting.  
@@ -81,7 +89,7 @@ Defines a list of built-in Jasmine reporter configurations to be used. If omitte
     Specifies whether to save nested describes within the same file as their parent. Setting to `true` does nothing if `consolidateAll` is also `true`. Setting to `false` will also set `consolidateAll` to `false`.  
 
     + **useDotNotation** — Type: `Boolean` Default: `true`  
-    Specifies whether to separate suite names with dots instead of spaces. e.g. `Class.init` instead of `Class init`.   
+    Specifies whether to separate suite names with dots instead of spaces. e.g. `Class.init` instead of `Class init`.  
 
 - **reporters.nunit**  
     NUnit XML Reporter that outputs test results to a file in NUnit XML Report format. Allows the test results to be used in java based CI systems like Jenkins.  
@@ -95,11 +103,24 @@ Defines a list of built-in Jasmine reporter configurations to be used. If omitte
     + **reportName** — Type: `String` Default: `"Jasmine Results"`  
     Defines the name for parent test-results node.  
 
+- **reporters.terminal**  
+    Similar to the default console reporter but simpler.  
+
+    + **color** — Type: `Boolean` Default: `false`  
+    Specifies whether the output should have colored text.  
+
+    + **verbosity** — Type: `Number` Default: `2`  
+    Specifies the verbosity level for the reporter output. Possible integer values: 0 to 3.  
+
+    + **showStack** — Type: `Boolean` Default: `false`  
+    Specifies whether to show stack trace for failed specs.  
+
 - **reporters.teamcity**  
     TeamCity Reporter that outputs test results for the Teamcity build system. There are no options to specify for this reporter. Just set this to `true` or `{}` to enable the reporter.   
 
 - **reporters.tap**  
     Reporter for Test Anything Protocol ([TAP](http://en.wikipedia.org/wiki/Test_Anything_Protocol)), that outputs tests results to console. There are no options to specify for this reporter. Just set this to `true` or `{}` to enable the reporter.  
+
 
 #### customReporters
 
@@ -120,22 +141,29 @@ grunt.initConfig({
             reporters: {
                 console: {
                     colors: true,
-                    cleanStack: true,
-                    verbose: true
+                    cleanStack: 1,       // (0|false)|(1|true)|2|3
+                    verbosity: 3,        // (0|false)|1|2|(3|true)
+                    listStyle: "indent", // "flat"|"indent"
+                    activity: true
                 },
-                junit: {
-                    savePath: "./reports",
-                    filePrefix: "junit-report",
-                    consolidate: true,
-                    useDotNotation: true
-                },
-                nunit: {
-                    savePath: "./reports",
-                    filename: "nunit-report.xml",
-                    reportName: "Test Results"
-                },
-                teamcity: false,
-                tap: false
+                // junit: {
+                //     savePath: "./reports",
+                //     filePrefix: "junit-report",
+                //     consolidate: true,
+                //     useDotNotation: true
+                // },
+                // nunit: {
+                //     savePath: "./reports",
+                //     filename: "nunit-report.xml",
+                //     reportName: "Test Results"
+                // },
+                // terminal: {
+                //     color: false,
+                //     showStack: false,
+                //     verbosity: 2
+                // },
+                // teamcity: true,
+                // tap: true
             },
             // add custom Jasmine reporter(s)
             customReporters: []
@@ -161,18 +189,34 @@ grunt.loadNpmTasks('grunt-jasmine-nodejs');
   
 _Note 1: The target-level `reporters` object will override the task-level `reporters` object all together. They will not be merged._
 
-_Note 2: If you're migrating from v0.4.x, task options used for the default reporter (`showColors` and `verboseReport`) are DEPRECATED and will be removed in a future release. Use the new (refactored) `reporters.console.colors` and `reporters.console.verbose` options instead._
+_Note 2: If you're migrating from v0.4.x, task options used for the default reporter (`showColors` and `verboseReport`) are now removed. Use the new (refactored) `reporters.console.colors` and `reporters.console.verbosity` options instead._
   
 
 ## Changelog
 
+- **v1.3.0** (2015-04-21)  
+    + Console Reporter: Progressive console output. Each spec result is now output at real-time as it's executed. This effectively helps tracking unhandled errors. (Fixes [Issue #7](https://github.com/onury/grunt-jasmine-nodejs/issues/7))  
+    + Console Reporter: Fixed mis-handled _nested_ suites (describe blocks). Each spec result and nested suite is now correctly output in relation to its parent test siute. (Fixes [Issue #10](https://github.com/onury/grunt-jasmine-nodejs/issues/10))  
+    + Console Reporter: Highlighted file name, line and column numbers in stacks. Only effective if `reporters.console.colors` is enabled.  
+    + Console Reporter: Fixed the stack-filter to support Windows file paths. (Fixes [Issue #11](https://github.com/onury/grunt-jasmine-nodejs/issues/11))  
+    + Console Reporter: Improved option: `cleanStack` now also accepts a `Number` (integer) to determine the filter level. See documentation.  
+    + Console Reporter: Added new option: `listStyle`. See documentation.  
+    + Console Reporter: Improved option: `verbosity` (alias: `verbose`) now also accepts a `Number` (integer) to determine the verbosity level. See documentation.  
+    + Console Reporter: Clickable file paths in error stacks (This is useful only if your terminal supports it. For example, <kbd>CMD</kbd>+<kbd>Click</kbd> will open the file and move the cursor to the target line in iTerm 2 for Mac, if [configured](http://adrian-philipp.com/post/iterm-jumpto-sublimetext).)  
+    + Console Reporter: Added new option: `activity`. See documentation.
+    + **Obselete** task options: Removed `showColors` and `verboseReport`. Use `reporters.console.colors` and `reporters.console.verbosity` options instead.  
+    + Enabled terminal reporter (similar to console reporter). Define `reporters.terminal` object to set its options.  
+    + Updated dependencies to their latest versions.  
+
+    ---
+
 - **v1.0.2** (2015-03-11)  
-    + Fixed *undefined suite description* issue for focused specs (`fit(...)`) in Console Reporter; which was breaking the spec-run. (Fixes [Issue #9](https://github.com/onury/grunt-jasmine-nodejs/issues/9))    
+    + Console Reporter: Fixed *undefined suite description* issue for focused specs (`fit(...)`); which was breaking the spec-run. (Fixes [Issue #9](https://github.com/onury/grunt-jasmine-nodejs/issues/9))    
 
     ---
 
 - **v1.0.1** (2015-03-06)  
-    + Fixed Console Reporter symbols and colors for Windows platforms. (Fixes [Issue #6](https://github.com/onury/grunt-jasmine-nodejs/issues/6))  
+    + Console Reporter: Fixed symbols and colors for Windows platforms. (Fixes [Issue #6](https://github.com/onury/grunt-jasmine-nodejs/issues/6))  
 
     ---
 
@@ -180,7 +224,7 @@ _Note 2: If you're migrating from v0.4.x, task options used for the default repo
     + Added new reporters: JUnit XML Reporter, NUnit XML Reporter, TeamCity Reporter, TAP Reporter. (Fulfills [Issue #4](https://github.com/onury/grunt-jasmine-nodejs/issues/4)). Implemented using [jasmine-reporters](https://github.com/larrymyers/jasmine-reporters).  
     + Added new task option `reporters`. This object defines enabled reporters to be used in conjunction. See documentation.  
     + Deprecated task options: `showColors` and `verboseReport`. These are refactored under `reporters.console` object.  
-    + Added new option for console reporter: `cleanStack`.  
+    + Console Reporter: Added new option: `cleanStack`.  
     + Added support for adding custom reporters. See `customReporters` task option.  
     + Better output for Grunt `--verbose` command.  
     + Code revisions and clean-up.  
@@ -188,28 +232,28 @@ _Note 2: If you're migrating from v0.4.x, task options used for the default repo
     ---
 
 - v0.4.1 (2015-03-03)  
-    + Fixes for `null` stack trace & peer jasmine-core. ([PR #3](https://github.com/onury/grunt-jasmine-nodejs/pull/3) by [@fiznool](https://github.com/fiznool))  
+    + Console Reporter: Fixes for `null` stack trace & peer jasmine-core. ([PR #3](https://github.com/onury/grunt-jasmine-nodejs/pull/3) by [@fiznool](https://github.com/fiznool))  
 
     ---
   
 - v0.4.0 (2015-03-01)  
     + Fixed a concatenation issue that would prevent helper-files from loading. (Fixes [Issue #1](https://github.com/onury/grunt-jasmine-nodejs/issues/1))  
     + Added new task option `verboseReport` which reports a verbose list of all suites.  
-    + Improved reporter output.  
+    + Console Reporter: Improved reporter output.  
     + Updated test example (added helper file).  
     + Code clean-up.  
 
     ---
   
 - v0.3.5 (2015-02-12)  
-    + Cleaner error stacks. Filtered out lines with jasmine-core path.  
+    + Console Reporter: Cleaner error stacks. Filtered out lines with jasmine-core path.  
     + Fixed a typo that caused the task to throw a `TypeError` when a test fails.  
-    + Better reporter console output.  
+    + Console Reporter: Better reporter console output.  
 
     ---
   
 - v0.3.1 (2015-02-07)  
-    + Fixed timer (zero elapsed time) issue in `jasmine.reporter.js`.  
+    + Console Reporter: Fixed timer (zero elapsed time) issue.  
 
     ---
   

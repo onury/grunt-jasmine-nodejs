@@ -68,8 +68,6 @@ module.exports = function (grunt) {
             specNameSuffix: 'spec.js', // string or array
             helperNameSuffix: 'helper.js',
             useHelpers: false,
-            showColors: true, // DEPRECATED
-            verboseReport: true, // DEPRECATED
             reporters: {}
             // , customReporters: []
         });
@@ -95,17 +93,16 @@ module.exports = function (grunt) {
 
         // Extends default console reporter options
         function getConsoleReporterOpts(opts) {
-            return _.extend({
-                colors: typeof options.showColors === 'boolean'
-                    ? options.showColors : true,
-                verbose: typeof options.verboseReport === 'boolean'
-                    ? options.verboseReport : true,
-                cleanStack: true,
-                print: function () {
-                    grunt.log.write.apply(this, arguments);
-                },
-                onComplete: onComplete
-            }, opts);
+            opts = opts || {};
+            opts.print = function () {
+                grunt.log.write.apply(this, arguments);
+            };
+            opts.onComplete = onComplete;
+            // checking this here for the old name `verbose` (now alias).
+            opts.verbosity = typeof opts.verbosity === undefined
+                ? opts.verbose
+                : opts.verbosity;
+            return opts;
         }
 
         // Each reporter will call `jasmineDone()` method when test is
@@ -144,9 +141,10 @@ module.exports = function (grunt) {
         }
 
         // BUILT-IN REPORTERS
-
         // additional Jasmine reporters
         // https://github.com/larrymyers/jasmine-reporters
+
+        // Reporters that only write to a file:
         if (ropts.junit) {
             var junit = new reporters.JUnitXmlReporter(ropts.junit);
             addReporter(junit, 'JUnit XML Reporter');
@@ -155,19 +153,25 @@ module.exports = function (grunt) {
             var nunit = new reporters.NUnitXmlReporter(ropts.nunit);
             addReporter(nunit, 'NUnit XML Reporter');
         }
-        if (ropts.teamcity) {
+
+        // We will not allow reporters producing command-line output to run at
+        // the same time, to prevent puzzled outputs.
+        var conflict = !!ropts.console;
+        if (!conflict && ropts.terminal) {
+            conflict = true;
+            var terminal = new reporters.TerminalReporter(ropts.terminal);
+            addReporter(terminal, 'Terminal Reporter');
+        }
+        if (!conflict && ropts.teamcity) {
+            conflict = true;
             var teamcity = new reporters.TeamCityReporter(); // no options to set
             addReporter(teamcity, 'TeamCity Reporter');
         }
-        if (ropts.tap) {
+        if (!conflict && ropts.tap) {
+            conflict = true;
             var tap = new reporters.TapReporter(); // no options to set
             addReporter(tap, 'TAP Reporter');
         }
-        // We won't use terminal reporter since the default reporter is similar and better.
-        // if (ropts.terminal && !ropts.console) {
-        //     var terminal = new reporters.TerminalReporter(ropts.terminal);
-        //     addReporter(terminal, 'Terminal Reporter');
-        // }
 
         // CUSTOM JASMINE REPORTERS
 

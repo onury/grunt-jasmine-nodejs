@@ -1,5 +1,5 @@
 /*jslint node:true, nomen:true, unparam:true, plusplus:true, vars:true */
-/*global jasmine, describe, fdescribe, xdescribe, before, beforeEach, beforeAll, after, afterEach, afterAll, it, fit, xit, expect, mostRecentAjaxRequest, qq, runs, spyOn, spyOnEvent, waitsFor, confirm, context */
+/*global jasmine, describe, fdescribe, xdescribe, before, beforeEach, beforeAll, after, afterEach, afterAll, it, fit, xit, expect, pending, mostRecentAjaxRequest, qq, runs, spyOn, spyOnEvent, waitsFor, confirm, context */
 
 (function () {
     'use strict';
@@ -11,7 +11,7 @@
     proto.divide = function divide(a, b) { return a / b; };
     proto.multiply = function multiply(a, b) { return a * b; };
 
-    describe('Test Suite: Calculator', function () {
+    describe('Calculator Suite', function () {
         var calculator,
             a = 10,
             b = 2;
@@ -26,6 +26,13 @@
             // this is a custom matcher implemented within our helper.
             expect(result).toBePositive();
         });
+        it('should execute async spec', function (done) {
+            var result = calculator.add(a, b);
+            setTimeout(function () {
+                expect(result).toEqual(12);
+                done();
+            }, 2000);
+        });
         it('should subtract numbers', function () {
             var result = calculator.subtract(b, a);
             expect(result).toEqual(-8);
@@ -39,6 +46,7 @@
         it('should multiply numbers', function () {
             var result = calculator.multiply(a, b);
             expect(result).toEqual(20);
+            pending('this is the pending reason');
         });
 
     });
