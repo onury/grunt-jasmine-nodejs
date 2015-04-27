@@ -3,7 +3,7 @@
 /**
  *  Console.Reporter
  *  @author   Onur Yıldırım (onur@cutepilot.com)
- *  @version  1.1.0 (2015-04-27)
+ *  @version  1.1.1 (2015-04-27)
  *  @license  MIT
  */
 module.exports = (function () {
@@ -158,19 +158,23 @@ module.exports = (function () {
         this.running = false;
     }
     Activity.prototype.stop = function () {
-        // clear the full title
-        if (this._row) {
-            charm
-                .position(1, this._row)
-                .delete('line', 1); // .erase('line');
-        }
-        this._ticks = 0;
-        this._row = null;
         if (this._timer) {
             clearInterval(this._timer);
             this._timer = null;
         }
         this.running = false;
+        // clear the full title
+        if (this._row) {
+            charm
+                .position(0, this._row)
+                .delete('line', 1);
+        } else {
+            charm
+                .erase('line')
+                .write('\r');
+        }
+        this._ticks = 0;
+        this._row = null;
     };
     function _activityRun() {
         this._ticks += 1;
@@ -183,11 +187,15 @@ module.exports = (function () {
         // move cursor position to start point (row) and update activity line.
         if (this._row) {
             charm.position(0, this._row);
+        } else {
+            charm.write('\r');
         }
         charm.foreground('white').write(title);
     }
     Activity.prototype.start = function (title) {
         var $this = this;
+        // call stop to ensure prev activity is written with prev title.
+        $this.stop();
         $this.title = title;
         $this.running = true;
         // get current cursor position and start timer
