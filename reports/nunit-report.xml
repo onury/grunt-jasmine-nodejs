@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<test-results name="Test Results" total="18" failures="2" not-run="7" date="2015-04-27" time="04:09:30">
- <test-suite name="Activity Test" executed="true" success="true" time="4.413">
+<test-results name="Test Results" total="18" failures="2" not-run="7" date="2015-04-27" time="04:16:05">
+ <test-suite name="Activity Test" executed="true" success="true" time="4.419">
   <results>
-   <test-case name="should log ticks" executed="true" success="true" time="4.412">
+   <test-case name="should log ticks" executed="true" success="true" time="4.418">
    </test-case>
   </results>
  </test-suite>
- <test-suite name="Suite 1 (Level 1)" executed="true" success="false" time="1.009">
+ <test-suite name="Suite 1 (Level 1)" executed="true" success="false" time="1.011">
   <results>
    <test-suite name="Suite 2 (Level 2)" executed="true" success="true" time="0.001">
     <results>
-     <test-suite name="Suite 3 (Level 3)" executed="true" success="true" time="0.001">
+     <test-suite name="Suite 3 (Level 3)" executed="true" success="true" time="0">
       <results>
       </results>
      </test-suite>
@@ -26,15 +26,15 @@
    </test-suite>
    <test-suite name="Suite 5 (Level 2)" executed="true" success="true" time="0.001">
     <results>
-     <test-case name="Suite 5, Spec 1 (single)" executed="true" success="true" time="0.001">
+     <test-case name="Suite 5, Spec 1 (single)" executed="true" success="true" time="0">
      </test-case>
     </results>
    </test-suite>
-   <test-case name="Suite 1, Spec 1" executed="true" success="true" time="0.001">
+   <test-case name="Suite 1, Spec 1" executed="true" success="true" time="0.002">
    </test-case>
    <test-case name="Suite 1, Spec 2" executed="true" success="true" time="0">
    </test-case>
-   <test-case name="Suite 1, Spec 3" executed="true" success="false" time="1.004">
+   <test-case name="Suite 1, Spec 3" executed="true" success="false" time="1.006">
     <failure>
      <message><![CDATA[Expected false to equal true.]]></message>
      <stack-trace><![CDATA[Error: Expected false to equal true.
@@ -66,7 +66,7 @@
    </test-case>
   </results>
  </test-suite>
- <test-suite name="Suite 6 (Level 1)" executed="true" success="true" time="0">
+ <test-suite name="Suite 6 (Level 1)" executed="true" success="true" time="0.001">
   <results>
    <test-case name="Suite 6, Spec 1" executed="true" success="true" time="0">
    </test-case>
@@ -74,15 +74,15 @@
    </test-case>
   </results>
  </test-suite>
- <test-suite name="Calculator Suite" executed="true" success="false" time="4.005">
+ <test-suite name="Calculator Suite" executed="true" success="false" time="4.004">
   <results>
-   <test-case name="should add numbers" executed="true" success="true" time="0.001">
+   <test-case name="should add numbers" executed="true" success="true" time="0">
    </test-case>
    <test-case name="should execute async spec..." executed="true" success="true" time="4.002">
    </test-case>
-   <test-case name="should subtract numbers" executed="true" success="true" time="0.001">
+   <test-case name="should subtract numbers" executed="true" success="true" time="0">
    </test-case>
-   <test-case name="should divide numbers" executed="true" success="false" time="0">
+   <test-case name="should divide numbers" executed="true" success="false" time="0.001">
     <failure>
      <message><![CDATA[Expected 5 to equal 0.]]></message>
      <stack-trace><![CDATA[Error: Expected 5 to equal 0.
@@ -98,7 +98,7 @@
     at QueueRunner.execute (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1714:10)]]></stack-trace>
     </failure>
    </test-case>
-   <test-case name="should multiply numbers (final)" executed="false" success="true" time="0.001">
+   <test-case name="should multiply numbers (final)" executed="false" success="true" time="0">
    </test-case>
   </results>
  </test-suite>

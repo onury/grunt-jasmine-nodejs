@@ -240,7 +240,8 @@ module.exports = (function () {
         var printer = options.print || log,
             onComplete = options.onComplete || function () {},
             timer = new Timer(),
-            activity = new Activity();
+            activity;
+        if (options.activity) { activity = new Activity(); }
 
         var _failedSpecs = [],
             _pendingSpecs = [],
