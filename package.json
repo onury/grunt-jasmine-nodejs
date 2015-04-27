@@ -1,6 +1,6 @@
 {
   "name": "grunt-jasmine-nodejs",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Jasmine (v2.x) Grunt task for NodeJS. Supports latest Jasmine features such as fdescribe, fit, beforeAll, afterAll, etc... Built-in reporters: Default (Console) Reporter, JUnit XML, NUnit XML, TeamCity, TAP Reporter.",
   "author": {
     "name": "Onur Yıldırım",
