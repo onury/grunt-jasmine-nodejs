@@ -2,7 +2,7 @@
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, Terminal Reporter, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
-> Version: 1.3.0  
+> Version: 1.3.1  
 > Author: Onur Yıldırım (onury) © 2015  
 > Licensed under the MIT License.  
 
@@ -70,8 +70,8 @@ Defines a list of built-in Jasmine reporter configurations to be used. If omitte
     + **listStyle** — Type: `String` Default: `"indent"`  
     Indicates the style of suites/specs list output. Possible values: `"flat"` or `"indent"`. Setting this to `"indent"` provides a better view especially when using nested (describe) suites. This option is only effective when verbosity level is set to `true` or `3`.  
 
-    + **activity** — Type: `Boolean` Default: `true`  
-    Specifies whether to enable the activity indicator animation that outputs the current spec that is being executed.  
+    + **activity** — Type: `Boolean` Default: `false`  
+    Specifies whether to enable the activity indicator animation that outputs the current spec that is being executed. If your tests log extra data to console, this option should be disabled or they might be overwritten.  
 
 - **reporters.junit**  
     JUnit XML Reporter that outputs test results to a file in JUnit XML Report format. The default option values are set to create as few .xml files as possible. It is possible to save a single XML file, or an XML file for each top-level `describe`, or an XML file for each `describe` regardless of nesting.  
@@ -144,7 +144,7 @@ grunt.initConfig({
                     cleanStack: 1,       // (0|false)|(1|true)|2|3
                     verbosity: 3,        // (0|false)|1|2|(3|true)
                     listStyle: "indent", // "flat"|"indent"
-                    activity: true
+                    activity: false
                 },
                 // junit: {
                 //     savePath: "./reports",
@@ -193,6 +193,11 @@ _Note 2: If you're migrating from v0.4.x, task options used for the default repo
   
 
 ## Changelog
+
+- **v1.3.1** (2015-04-27)  
+    + Console Reporter: Changed the default value of `report.console.activity` option to `false`. This should not be enabled if your tests log extra data to console. Improved activity output.  
+    
+    ---
 
 - **v1.3.0** (2015-04-21)  
     + Console Reporter: Progressive console output. Each spec result is now output at real-time as it's executed. This effectively helps tracking unhandled errors. (Fixes [Issue #7](https://github.com/onury/grunt-jasmine-nodejs/issues/7))  

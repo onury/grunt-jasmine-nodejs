@@ -3,7 +3,7 @@
 /**
  *  Console.Reporter
  *  @author   Onur Yıldırım (onur@cutepilot.com)
- *  @version  1.0.0 (2015-04-19)
+ *  @version  1.1.0 (2015-04-27)
  *  @license  MIT
  */
 module.exports = (function () {
@@ -15,6 +15,10 @@ module.exports = (function () {
         // win64, just in case...
         isWindows = process.platform === 'win32'
             || process.platform === 'win64';
+
+    var charm = require('charm')(process);
+    charm.reset();
+    charm.on('^C', process.exit);
 
     //----------------------------
     //  UTILITY METHODS
@@ -144,41 +148,61 @@ module.exports = (function () {
     //----------------------------
 
     // example:
-    // var activity = new Activity(console.log, 100);
+    // var activity = new Activity(100);
     // activity.start('* please wait...');
     // asterisk will be replaced with rotating line animation (\ | / —)
     // on each interval.
-    function Activity(printer, interval) {
-        this._count = 0;
-        this._interval = interval || 50;
-        // this.print = printer;
-        this.print = function () {
-            printer.apply(printer, arguments);
-        };
+    function Activity(interval) {
+        this._ticks = 0;
+        this._interval = interval || 60;
+        this.running = false;
     }
     Activity.prototype.stop = function () {
         // clear the full title
-        this.print('\r' + repeat(' ', this._title.length) + '\r');
-        this._count = 0;
+        if (this._row) {
+            charm
+                .position(1, this._row)
+                .delete('line', 1); // .erase('line');
+        }
+        this._ticks = 0;
+        this._row = null;
         if (this._timer) {
             clearInterval(this._timer);
             this._timer = null;
         }
+        this.running = false;
     };
+    function _activityRun() {
+        this._ticks += 1;
+        var mod = this._ticks % 4,
+            c = mod === 0
+                ? '\\' : mod === 1
+                ? '|'  : mod === 2
+                ? '/'  : '—';
+        var title = this.title ? this.title.replace(/\*/g, c) : c;
+        // move cursor position to start point (row) and update activity line.
+        if (this._row) {
+            charm.position(0, this._row);
+        }
+        charm.foreground('white').write(title);
+    }
     Activity.prototype.start = function (title) {
-        this._title = title;
-        this.stop();
         var $this = this;
-        this._timer = setInterval(function () {
-            $this._count += 1;
-            var mod = $this._count % 4,
-                c = mod === 0
-                    ? '\\' : mod === 1
-                    ? '|'  : mod === 2
-                    ? '/'  : '—';
-            var t = title ? title.replace(/\*/g, c) : c;
-            $this.print(t + '\r');
-        }, this._interval);
+        $this.title = title;
+        $this.running = true;
+        // get current cursor position and start timer
+        charm.position(function (x, y) {
+            $this._row = y;
+        });
+        // run without waiting for cursor position.
+        $this._timer = setInterval(function () {
+            _activityRun.apply($this);
+        }, $this._interval);
+    };
+    Activity.prototype.destroy = function () {
+        charm
+            .removeAllListeners('^C')
+            .end();
     };
 
     //----------------------------
@@ -195,9 +219,9 @@ module.exports = (function () {
         // extend options with defaults
         options = extend({
             colors: true,
-            cleanStack: 1, // 0 to 2
+            cleanStack: 1, // 0 to 3
             verbosity: 3,  // 0 to 3
-            activity: true,
+            activity: false,
             listStyle: 'indent'
         }, options);
 
@@ -216,7 +240,7 @@ module.exports = (function () {
         var printer = options.print || log,
             onComplete = options.onComplete || function () {},
             timer = new Timer(),
-            activity = new Activity(printer);
+            activity = new Activity();
 
         var _failedSpecs = [],
             _pendingSpecs = [],
@@ -286,12 +310,12 @@ module.exports = (function () {
                 num = num || 1;
                 printer(new Array(num + 1).join('\n'));
             },
-            return: function () {
-                printer('\r');
-                if (arguments.length) {
-                    printer.apply(printer, arguments);
-                }
-            },
+            // return: function () {
+            //     printer('\r');
+            //     if (arguments.length) {
+            //         printer.apply(printer, arguments);
+            //     }
+            // },
             suite: function (suite) {
                 if (!report.list) { return; }
                 _depth = _depth || 0;
@@ -507,7 +531,7 @@ module.exports = (function () {
 
             // show the activity animation and current spec to be executed, if
             // enabled.
-            if (options.activity) {
+            if (options.activity && activity) {
                 var ind = report.list && listStyle.indent
                         ? repeat(_indentChar, (_depth + 1) * _indentUnit)
                         : '',
@@ -517,7 +541,7 @@ module.exports = (function () {
         };
 
         this.specDone = function (spec) {
-            if (options.activity) {
+            if (options.activity && activity) {
                 activity.stop();
             }
 
@@ -544,6 +568,10 @@ module.exports = (function () {
         };
 
         this.jasmineDone = function (a) {
+            if (options.activity && activity) {
+                activity.destroy();
+                activity = null;
+            }
             print.end();
             print.newLine();
             finalReport();

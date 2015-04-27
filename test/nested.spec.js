@@ -21,7 +21,7 @@
         });
 
         describe('Suite 2 (Level 2)', function () {
-            it('Suite 2, Spec 1', function () {
+            it('Suite 2, Spec 1 (single)', function () {
                 expect(true).toEqual(true);
             });
             xdescribe('Suite 3 (Level 3)', function () {
@@ -32,23 +32,23 @@
                     expect(true).toEqual(true);
                 });
             });
-            xit('Suite 2, Spec 2', function () {
+            xit('Suite 2, Spec 2 (final)', function () {
                 expect(true).toEqual(true);
             });
         });
 
-        xit('Suite 1, Spec 4', function () {
+        xit('Suite 1, Spec 4 (final)', function () {
             expect(true).toEqual(true);
         });
 
         xdescribe('Suite 4 (Level 2)', function () {
-            it('Suite 4, Spec 1', function () {
+            it('Suite 4, Spec 1 (single)', function () {
                 expect(true).toEqual(true);
             });
         });
 
         describe('Suite 5 (Level 2)', function () {
-            it('Suite 5, Spec 1', function () {
+            it('Suite 5, Spec 1 (single)', function () {
                 expect(true).toEqual(true);
             });
         });
@@ -59,7 +59,7 @@
         it('Suite 6, Spec 1', function () {
             expect(true).toEqual(true);
         });
-        xit('Suite 6, Spec 2', function () {
+        xit('Suite 6, Spec 2 (final)', function () {
             expect(true).toEqual(true);
         });
     });
