@@ -51,7 +51,7 @@ Specifies whether to execute the helper files.
 #### stopOnFailure
 
 Type: `Boolean`  Default: `false`  
-Specifies whether to stop running further tests, on first spec failure.
+Specifies whether to stop running further tests, on first expectation-failure. This can be useful if you want to debug your failed specs one by one. _Note: Regardless of this option; the runner will still stop on suite failures (such as errors thrown in `afterAll`, etc) and as normal, Grunt will abort when a task/target fails._
 
 #### reporters
 
