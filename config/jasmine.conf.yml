@@ -6,6 +6,7 @@
         specNameSuffix: "spec.js", # also accepts an array
         helperNameSuffix: "helper.js",
         useHelpers: false,
+        stopOnFailure: false,
         # options for built-in reporters
         reporters: {
             # console (default) reporter
@@ -27,28 +28,44 @@
                 filename: "nunit-report.xml",
                 reportName: 'Test Results'
             },
-            terminal: {
-                color: false,
-                showStack: false,
-                verbosity: 2        # 0|1|2|3
-            },
-            teamcity: true,
-            tap: true
+            # terminal: {
+            #     color: false,
+            #     showStack: false,
+            #     verbosity: 2        # 0|1|2|3
+            # },
+            # teamcity: true,
+            # tap: true
         },
         # list of custom Jasmine reporter objects
         customReporters: []
     },
-    all: {
+    calc: {
         # target specific options
         options: {
             useHelpers: true
         },
         # spec files
         specs: [
-            "test/**"
+            "test/*"
         ],
         helpers: [
             "test/helpers/**"
+        ]
+    },
+    other: {
+        options: {
+            reporters: {
+                console: {
+                    colors: false,
+                    cleanStack: 1,
+                    verbosity: 3,
+                    listStyle: "indent",
+                    activity: true
+                }
+            }
+        },
+        specs: [
+            "test/other/**"
         ]
     }
 }

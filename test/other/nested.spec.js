@@ -37,8 +37,9 @@
             });
         });
 
-        xit('Suite 1, Spec 4 (final)', function () {
+        it('Suite 1, Spec 4 (final)', function () {
             expect(true).toEqual(true);
+            pending('test pending');
         });
 
         xdescribe('Suite 4 (Level 2)', function () {

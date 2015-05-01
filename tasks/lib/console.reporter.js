@@ -3,7 +3,7 @@
 /**
  *  Console.Reporter
  *  @author   Onur Yıldırım (onur@cutepilot.com)
- *  @version  1.1.1 (2015-04-27)
+ *  @version  1.2.0 (2015-05-01)
  *  @license  MIT
  */
 module.exports = (function () {
@@ -15,10 +15,6 @@ module.exports = (function () {
         // win64, just in case...
         isWindows = process.platform === 'win32'
             || process.platform === 'win64';
-
-    var charm = require('charm')(process);
-    charm.reset();
-    charm.on('^C', process.exit);
 
     //----------------------------
     //  UTILITY METHODS
@@ -47,8 +43,6 @@ module.exports = (function () {
         switch (name) {
         case 'dot':
             return isWindows ? '.' : '∙';
-        case 'dotw':
-            return isWindows ? '!' : '•';
         case 'info':
             return isWindows ? 'i' : 'ℹ';
         case 'success':
@@ -57,6 +51,8 @@ module.exports = (function () {
             return isWindows ? '‼' : '⚠';
         case 'error':
             return isWindows ? '×' : '✖'; // ✕
+        case 'disabled':
+            return isWindows ? '!' : '•';
         }
     }
 
@@ -148,10 +144,11 @@ module.exports = (function () {
     //----------------------------
 
     // example:
-    // var activity = new Activity(100);
+    // var activity = new Activity(80);
     // activity.start('* please wait...');
-    // asterisk will be replaced with rotating line animation (\ | / —)
-    // on each interval.
+    // asterisk will be replaced with rotating line animation (\ | / —) on
+    // each interval. For ANSI codes, see http://academic.evergreen.edu/projec
+    // ts/biophysics/technotes/program/ansi_esc.htm
     function Activity(interval) {
         this._ticks = 0;
         this._interval = interval || 60;
@@ -162,17 +159,11 @@ module.exports = (function () {
             clearInterval(this._timer);
             this._timer = null;
         }
-        this.running = false;
         // clear the full title
-        if (this._row) {
-            charm
-                .position(0, this._row)
-                .delete('line', 1);
-        } else {
-            charm
-                .erase('line')
-                .write('\r');
+        if (this.running) {
+            log('\x1B[u\r\x1B[K');
         }
+        this.running = false;
         this._ticks = 0;
         this._row = null;
     };
@@ -184,33 +175,20 @@ module.exports = (function () {
                 ? '|'  : mod === 2
                 ? '/'  : '—';
         var title = this.title ? this.title.replace(/\*/g, c) : c;
-        // move cursor position to start point (row) and update activity line.
-        if (this._row) {
-            charm.position(0, this._row);
-        } else {
-            charm.write('\r');
-        }
-        charm.foreground('white').write(title);
+        // move cursor to last saved position, clear line and update activity
+        // title.
+        log('\x1B[u' + title);
     }
     Activity.prototype.start = function (title) {
         var $this = this;
-        // call stop to ensure prev activity is written with prev title.
         $this.stop();
         $this.title = title;
         $this.running = true;
-        // get current cursor position and start timer
-        charm.position(function (x, y) {
-            $this._row = y;
-        });
-        // run without waiting for cursor position.
+        // save cursor position
+        log('\x1B[s');
         $this._timer = setInterval(function () {
             _activityRun.apply($this);
         }, $this._interval);
-    };
-    Activity.prototype.destroy = function () {
-        charm
-            .removeAllListeners('^C')
-            .end();
     };
 
     //----------------------------
@@ -246,7 +224,6 @@ module.exports = (function () {
         };
 
         var printer = options.print || log,
-            onComplete = options.onComplete || function () {},
             timer = new Timer(),
             activity;
         if (options.activity) { activity = new Activity(); }
@@ -266,7 +243,8 @@ module.exports = (function () {
                     total: 0,
                     failed: 0,
                     passed: 0,
-                    pending: 0
+                    pending: 0,
+                    disabled: 0
                 },
                 expects: {
                     total: 0,
@@ -335,6 +313,7 @@ module.exports = (function () {
                 print.line(ind + title);
             },
             spec: function (spec) {
+                // console.log('spec', spec.description, spec.status);
                 if (!report.list) { return; }
                 _depth = _depth || 0;
                 var title = '',
@@ -344,6 +323,9 @@ module.exports = (function () {
                 switch (spec.status) {
                 case 'pending':
                     title = style.yellow(symbol('warning') + ' ' + spec.description);
+                    break;
+                case 'disabled':
+                    title = style.gray(symbol('disabled') + ' ' + spec.description);
                     break;
                 case 'failed':
                     var fc = spec.failedExpectations.length,
@@ -438,15 +420,15 @@ module.exports = (function () {
                         print.str(style.yellow(' (' + stats.suites.disabled + ' disabled)'));
                     }
 
-                    var executedSpecs = stats.specs.total - stats.specs.pending;
+                    var executedSpecs = stats.specs.total - (stats.specs.pending + stats.specs.disabled);
                     print.line('Specs:   ' + style.white(executedSpecs) + ' of ' + stats.specs.defined);
                     var specsInfo = [];
                     if (stats.specs.pending) {
                         specsInfo.push(stats.specs.pending + ' pending');
                     }
-                    var disabledSpecs = stats.specs.defined - stats.specs.total;
-                    if (disabledSpecs > 0) {
-                        specsInfo.push(disabledSpecs + ' disabled');
+                    // var disabledSpecs = stats.specs.defined - stats.specs.total;
+                    if (stats.specs.disabled > 0) {
+                        specsInfo.push(stats.specs.disabled + ' disabled');
                     }
                     if (specsInfo.length) {
                         print.str(style.yellow(' (' + specsInfo.join(', ') + ')'));
@@ -471,8 +453,6 @@ module.exports = (function () {
             for (i = 0; i < _failedSuites.length; i++) {
                 suiteFailureDetails(_failedSuites[i]);
             }
-
-            onComplete(stats.failures === 0);
         }
 
         //----------------------------
@@ -514,11 +494,11 @@ module.exports = (function () {
 
             if (disabled) {
                 stats.suites.disabled++;
-                if (report.list) {
-                    // if suite is disabled, print extra info and line.
-                    print.str(style.gray(' (disabled)'));
-                    // print.newLine();
-                }
+                // if (report.list) {
+                //     // if suite is disabled, print extra info and line.
+                //     print.str(style.gray(' (disabled)'));
+                //     // print.newLine();
+                // }
             }
 
             _depth--;
@@ -564,6 +544,10 @@ module.exports = (function () {
                 stats.specs.pending++;
                 _pendingSpecs.push(spec);
                 break;
+            // this is new in Jasmine 2.3.x
+            case 'disabled':
+                stats.specs.disabled++;
+                break;
             case 'failed':
                 stats.failures++;
                 stats.specs.failed++;
@@ -577,13 +561,12 @@ module.exports = (function () {
         };
 
         this.jasmineDone = function (a) {
-            if (options.activity && activity) {
-                activity.destroy();
-                activity = null;
-            }
             print.end();
             print.newLine();
             finalReport();
+            if (options.activity && activity) {
+                activity = null;
+            }
         };
 
     }

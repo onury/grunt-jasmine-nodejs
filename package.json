@@ -43,8 +43,7 @@
   ],
   "dependencies": {
     "chalk": "^1.0.0",
-    "charm": "^1.0.0",
-    "jasmine": "^2.2.1",
+    "jasmine-core": "^2.3.0",
     "jasmine-reporters": "^2.0.5"
   },
   "devDependencies": {

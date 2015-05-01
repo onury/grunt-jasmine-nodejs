@@ -10,6 +10,6 @@ module.exports = function (grunt) {
     // grunt.loadNpmTasks('grunt-jasmine-nodejs');
     grunt.loadTasks('tasks');
 
-    grunt.registerTask('default', ['jasmine_nodejs']);
+    grunt.registerTask('default', ['jasmine_nodejs:calc', 'jasmine_nodejs:other']);
 
 };

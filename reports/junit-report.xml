@@ -1,81 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
- <testsuite name="Activity Test" timestamp="2015-04-27T05:13:32" hostname="localhost" time="2.215" errors="0" tests="1" skipped="0" disabled="0" failures="0">
-  <testcase classname="Activity Test" name="should log ticks" time="2.213">
+ <testsuite name="Calculator Suite" timestamp="2015-05-01T17:50:56" hostname="localhost" time="4.012" errors="0" tests="4" skipped="1" disabled="0" failures="0">
+  <testcase classname="Calculator Suite" name="should add numbers" time="0.003">
   </testcase>
- </testsuite>
- <testsuite name="Suite 1 (Level 1)" timestamp="2015-04-27T05:13:34" hostname="localhost" time="1.014" errors="0" tests="4" skipped="1" disabled="0" failures="1">
-  <testcase classname="Suite 1 (Level 1)" name="Suite 1, Spec 1" time="0.002">
+  <testcase classname="Calculator Suite" name="should execute async spec..." time="4.003">
   </testcase>
-  <testcase classname="Suite 1 (Level 1)" name="Suite 1, Spec 2" time="0">
-  </testcase>
-  <testcase classname="Suite 1 (Level 1)" name="Suite 1, Spec 3" time="1.004">
-   <failure type="toEqual" message="Expected false to equal true."><![CDATA[Error: Expected false to equal true.
-    at stack (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1455:17)
-    at buildExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1425:14)
-    at Spec.Env.expectationResultFactory (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:572:18)
-    at Spec.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:321:34)
-    at Expectation.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:516:21)
-    at Expectation.toEqual (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1379:12)
-    at Object.<anonymous> (/Users/oy/developer/javascript/grunt-jasmine-nodejs/test/nested.spec.js:16:27)
-    at attemptAsync (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1771:24)
-    at QueueRunner.run (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1726:9)
-    at QueueRunner.execute (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1714:10)]]>
-   </failure>
-   <failure type="toEqual" message="Expected 1 to equal 2."><![CDATA[Error: Expected 1 to equal 2.
-    at stack (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1455:17)
-    at buildExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1425:14)
-    at Spec.Env.expectationResultFactory (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:572:18)
-    at Spec.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:321:34)
-    at Expectation.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:516:21)
-    at Expectation.toEqual (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1379:12)
-    at null._onTimeout (/Users/oy/developer/javascript/grunt-jasmine-nodejs/test/nested.spec.js:18:27)
-    at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)]]>
-   </failure>
-  </testcase>
-  <testcase classname="Suite 1 (Level 1)" name="Suite 1, Spec 4 (final)" time="0"><skipped />
-  </testcase>
- </testsuite>
- <testsuite name="Suite 1 (Level 1).Suite 2 (Level 2)" timestamp="2015-04-27T05:13:35" hostname="localhost" time="0.005" errors="0" tests="2" skipped="1" disabled="0" failures="0">
-  <testcase classname="Suite 1 (Level 1).Suite 2 (Level 2)" name="Suite 2, Spec 1 (single)" time="0">
-  </testcase>
-  <testcase classname="Suite 1 (Level 1).Suite 2 (Level 2)" name="Suite 2, Spec 2 (final)" time="0.001"><skipped />
-  </testcase>
- </testsuite>
- <testsuite name="Suite 1 (Level 1).Suite 2 (Level 2).Suite 3 (Level 3)" timestamp="2015-04-27T05:13:35" hostname="localhost" time="0.001" errors="0" tests="0" skipped="0" disabled="0" failures="0">
- </testsuite>
- <testsuite name="Suite 1 (Level 1).Suite 4 (Level 2)" timestamp="2015-04-27T05:13:35" hostname="localhost" time="0" errors="0" tests="0" skipped="0" disabled="0" failures="0">
- </testsuite>
- <testsuite name="Suite 1 (Level 1).Suite 5 (Level 2)" timestamp="2015-04-27T05:13:35" hostname="localhost" time="0.001" errors="0" tests="1" skipped="0" disabled="0" failures="0">
-  <testcase classname="Suite 1 (Level 1).Suite 5 (Level 2)" name="Suite 5, Spec 1 (single)" time="0.001">
-  </testcase>
- </testsuite>
- <testsuite name="Suite 6 (Level 1)" timestamp="2015-04-27T05:13:35" hostname="localhost" time="0.001" errors="0" tests="2" skipped="1" disabled="0" failures="0">
-  <testcase classname="Suite 6 (Level 1)" name="Suite 6, Spec 1" time="0.001">
-  </testcase>
-  <testcase classname="Suite 6 (Level 1)" name="Suite 6, Spec 2 (final)" time="0"><skipped />
-  </testcase>
- </testsuite>
- <testsuite name="Calculator Suite" timestamp="2015-04-27T05:13:35" hostname="localhost" time="4.007" errors="0" tests="5" skipped="1" disabled="0" failures="1">
-  <testcase classname="Calculator Suite" name="should add numbers" time="0">
-  </testcase>
-  <testcase classname="Calculator Suite" name="should execute async spec..." time="4.002">
-  </testcase>
-  <testcase classname="Calculator Suite" name="should subtract numbers" time="0">
-  </testcase>
-  <testcase classname="Calculator Suite" name="should divide numbers" time="0.001">
-   <failure type="toEqual" message="Expected 5 to equal 0."><![CDATA[Error: Expected 5 to equal 0.
-    at stack (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1455:17)
-    at buildExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1425:14)
-    at Spec.Env.expectationResultFactory (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:572:18)
-    at Spec.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:321:34)
-    at Expectation.addExpectationResult (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:516:21)
-    at Expectation.toEqual (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1379:12)
-    at Object.<anonymous> (/Users/oy/developer/javascript/grunt-jasmine-nodejs/test/test.spec.js:44:28)
-    at attemptSync (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1741:24)
-    at QueueRunner.run (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1729:9)
-    at QueueRunner.execute (/Users/oy/developer/javascript/grunt-jasmine-nodejs/node_modules/jasmine/node_modules/jasmine-core/lib/jasmine-core/jasmine.js:1714:10)]]>
-   </failure>
+  <testcase classname="Calculator Suite" name="should subtract numbers" time="0.001">
   </testcase>
   <testcase classname="Calculator Suite" name="should multiply numbers (final)" time="0.001"><skipped />
   </testcase>

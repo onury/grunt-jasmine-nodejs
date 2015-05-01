@@ -2,7 +2,7 @@
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, Terminal Reporter, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
-> Version: 1.3.2  
+> Version: 1.4.0  
 > Author: Onur Yıldırım (onury) © 2015  
 > Licensed under the MIT License.  
 
@@ -47,6 +47,11 @@ Case-insensitive suffix(es) for the helper files, including the extension. Only 
 
 Type: `Boolean`  Default: `true`  
 Specifies whether to execute the helper files.
+
+#### stopOnFailure
+
+Type: `Boolean`  Default: `false`  
+Specifies whether to stop running further tests, on first spec failure.
 
 #### reporters
 
@@ -137,6 +142,7 @@ grunt.initConfig({
             specNameSuffix: "spec.js", // also accepts an array
             helperNameSuffix: "helper.js",
             useHelpers: false,
+            stopOnFailure: false,
             // configure one or more built-in reporters
             reporters: {
                 console: {
@@ -193,6 +199,15 @@ _Note 2: If you're migrating from v0.4.x, task options used for the default repo
   
 
 ## Changelog
+
+- **v1.4.0** (2015-05-01)  
+    + Updated Jasmine-Core, added support for latest Jasmine version (2.3.0). 
+    _Note that all `xit` specs are now treated as `disabled` instead of `pending`._  
+    + Added New Task Option: `stopOnFailure`. See documentation.  
+    + Fixed an issue where the task would exit before completing all targets. (Fixes [Issue #15](https://github.com/onury/grunt-jasmine-nodejs/issues/15))  
+    + Revised dependencies. Updated console reporter.  
+    
+    ---
 
 - **v1.3.2** (2015-04-27)  
     + Console Reporter: Changed the default value of `report.console.activity` option to `false`. This should not be enabled if your tests log extra data to console. Fixed activity output.  

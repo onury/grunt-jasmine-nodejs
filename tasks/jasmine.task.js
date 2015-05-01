@@ -8,7 +8,7 @@
 module.exports = function (grunt) {
     'use strict';
 
-    var Jasmine = require('jasmine'),
+    var JasmineRunner = require('./lib/jasmine.runner'),
         ConsoleReporter = require('./lib/console.reporter'),
         reporters = require('jasmine-reporters'),
         path = require('path'),
@@ -46,12 +46,6 @@ module.exports = function (grunt) {
         });
     }
 
-    function isJasmineReporter(object) {
-        return typeof object === 'object'
-            && typeof object.jasmineDone === 'function'
-            && typeof object.specDone === 'function';
-    }
-
     //-------------------------------------
     //  TASK DEFINITION
     //-------------------------------------
@@ -60,9 +54,7 @@ module.exports = function (grunt) {
         var task = this,
             // Mark the task as async
             taskComplete = task.async(),
-            conf = grunt.config.get([this.name, this.target]),
-            jasmine = new Jasmine(),
-            enabledReporters = [];
+            conf = grunt.config.get([this.name, this.target]);
 
         var options = task.options({
             specNameSuffix: 'spec.js', // string or array
@@ -72,7 +64,9 @@ module.exports = function (grunt) {
             // , customReporters: []
         });
 
-        var ropts = options.reporters;
+        var jasmineRunner = new JasmineRunner({ stopOnFailure: options.stopOnFailure }),
+            enabledReporters = [],
+            ropts = options.reporters;
 
         // HELPER METHODS
 
@@ -97,45 +91,18 @@ module.exports = function (grunt) {
             opts.print = function () {
                 grunt.log.write.apply(this, arguments);
             };
-            opts.onComplete = onComplete;
             // checking this here for the old name `verbose` (now alias).
-            opts.verbosity = typeof opts.verbosity === undefined
+            opts.verbosity = opts.verbosity === undefined
                 ? opts.verbose
                 : opts.verbosity;
             return opts;
         }
 
-        // Each reporter will call `jasmineDone()` method when test is
-        // complete. Here, we need to execute Grunt's async callback. This
-        // patch is used for additional built-in reporters and custom
-        // reporters. Our console (default) reporter already has an
-        // `onComplete` callback.
-        function addReporter(reporter, name) {
-            if (!isJasmineReporter(reporter)) {
-                grunt.log.error(name + ' is not a valid Jasmine reporter.');
-                return;
-            }
+        function addReporter(reporter) {
             try {
-                // store original callbacks
-                var jasmineDone = reporter.jasmineDone,
-                    specDone = reporter.specDone;
-                // mark whether failed so that we can use this to inform Grunt,
-                // when `jasmineDone()` is called.
-                reporter.specDone = function (spec) {
-                    if (spec.status === 'failed') {
-                        this.__failed = true;
-                    }
-                    specDone(spec);
-                };
-                // inject our async callback
-                reporter.jasmineDone = function () {
-                    jasmineDone();
-                    onComplete(!this.__failed);
-                };
-                jasmine.addReporter(reporter);
-                enabledReporters.push(name);
+                reporter = jasmineRunner.addReporter(reporter, onComplete);
+                enabledReporters.push(reporter.name);
             } catch (error) {
-                grunt.log.error('Could not add Jasmine reporter: ' + name);
                 grunt.log.error(error);
             }
         }
@@ -143,15 +110,18 @@ module.exports = function (grunt) {
         // BUILT-IN REPORTERS
         // additional Jasmine reporters
         // https://github.com/larrymyers/jasmine-reporters
+        var reporter;
 
         // Reporters that only write to a file:
         if (ropts.junit) {
-            var junit = new reporters.JUnitXmlReporter(ropts.junit);
-            addReporter(junit, 'JUnit XML Reporter');
+            reporter = new reporters.JUnitXmlReporter(ropts.junit);
+            reporter.name = 'JUnit XML Reporter';
+            addReporter(reporter);
         }
         if (ropts.nunit) {
-            var nunit = new reporters.NUnitXmlReporter(ropts.nunit);
-            addReporter(nunit, 'NUnit XML Reporter');
+            reporter = new reporters.NUnitXmlReporter(ropts.nunit);
+            reporter.name = 'NUnit XML Reporter';
+            addReporter(reporter);
         }
 
         // We will not allow reporters producing command-line output to run at
@@ -159,28 +129,30 @@ module.exports = function (grunt) {
         var conflict = !!ropts.console;
         if (!conflict && ropts.terminal) {
             conflict = true;
-            var terminal = new reporters.TerminalReporter(ropts.terminal);
-            addReporter(terminal, 'Terminal Reporter');
+            reporter = new reporters.TerminalReporter(ropts.terminal);
+            reporter.name = 'Terminal Reporter';
+            addReporter(reporter);
         }
         if (!conflict && ropts.teamcity) {
             conflict = true;
-            var teamcity = new reporters.TeamCityReporter(); // no options to set
-            addReporter(teamcity, 'TeamCity Reporter');
+            reporter = new reporters.TeamCityReporter(); // no options to set
+            reporter.name = 'TeamCity Reporter';
+            addReporter(reporter);
         }
         if (!conflict && ropts.tap) {
             conflict = true;
-            var tap = new reporters.TapReporter(); // no options to set
-            addReporter(tap, 'TAP Reporter');
+            reporter = new reporters.TapReporter(); // no options to set
+            reporter.name = 'TAP Reporter';
+            addReporter(reporter);
         }
 
         // CUSTOM JASMINE REPORTERS
 
         if (_.isArray(options.customReporters)) {
             options.customReporters.forEach(function (customReporter, index) {
-                var name = customReporter && customReporter.name
-                    ? customReporter.name
-                    : 'Custom Reporter #' + (index + 1);
-                addReporter(customReporter, name);
+                customReporter.name = customReporter.name
+                    || 'Custom Reporter #' + (index + 1);
+                addReporter(customReporter);
             });
         }
 
@@ -190,13 +162,13 @@ module.exports = function (grunt) {
         if (enabledReporters.length === 0 || ropts.console) {
             var crOpts = getConsoleReporterOpts(ropts.console),
                 consoleReporter = new ConsoleReporter(crOpts);
-            jasmine.addReporter(consoleReporter);
-            enabledReporters.push(consoleReporter.name);
+            // consoleReporter already has `name` property defined
+            addReporter(consoleReporter);
         }
 
         grunt.verbose.writeln('Enabled Reporters:\n  ', enabledReporters.join(', ') || 'none');
 
-        // EXECUTE SPEC FILES
+        // EXECUTE SPEC (and HELPER) FILES
 
         // Spec files
         var specSuffixes = ensureArray(options.specNameSuffix, ','),
@@ -208,12 +180,10 @@ module.exports = function (grunt) {
             var helperSuffixes = ensureArray(options.helperNameSuffix, ','),
                 helperFiles = expand(conf.helpers || [], helperSuffixes);
             grunt.verbose.writeln('Helper Files:\n  ', helperFiles);
-            specFiles = specFiles.concat(helperFiles);
+            jasmineRunner.loadHelpers(helperFiles);
         }
 
-        // set `.specFiles` property instead of `jasmine.execute(specFiles)`
-        // to prevent unnecessary process.
-        jasmine.specFiles = specFiles;
-        jasmine.execute();
+        jasmineRunner.loadSpecs(specFiles);
+        jasmineRunner.execute();
     });
 };
