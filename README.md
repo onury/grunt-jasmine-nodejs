@@ -2,7 +2,7 @@
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, Terminal Reporter, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
-> Version: 1.4.0  
+> Version: 1.4.2  
 > Author: Onur Yıldırım (onury) © 2015  
 > Licensed under the MIT License.  
 
@@ -69,11 +69,11 @@ Defines a list of built-in Jasmine reporter configurations to be used. If omitte
     + **cleanStack** — Type: `Number|Boolean` Default: `1`  
     Specifies the filter level for the error stacks. Possible integer values: 0 to 3. Set to `1` (or `true`) to only filter out lines with jasmine-core path from stacks. Set to `2` to filter out all `node_modules` paths. Set to `3` to also filter out lines with no file path in it.  
 
-    + **verbosity** — Type: `Number|Boolean` Default: `3`  
-    (_alias: `verbose`_) Specifies the verbosity level for the reporter output. Possible integer values: 0 to 3. When a `Boolean` value is passed, `true` defaults to `3` and `false` defaults to `0`.  
+    + **verbosity** — Type: `Number|Boolean` Default: `4`  
+    (_alias: `verbose`_) Specifies the verbosity level for the reporter output. Possible integer values: 0 to 4. When a `Boolean` value is passed, `true` defaults to `4` and `false` defaults to `0`. Level 0: reports errors only. Level 1: also displays a summary. Level 2: also reports pending specs. Level 3: additionally displays all suites and specs as a list, except disabled specs. Level 4: also lists disabled specs.  
 
     + **listStyle** — Type: `String` Default: `"indent"`  
-    Indicates the style of suites/specs list output. Possible values: `"flat"` or `"indent"`. Setting this to `"indent"` provides a better view especially when using nested (describe) suites. This option is only effective when verbosity level is set to `true` or `3`.  
+    Indicates the style of suites/specs list output. Possible values: `"flat"` or `"indent"`. Setting this to `"indent"` provides a better view especially when using nested (describe) suites. This option is only effective when verbosity level is set to `3`, `4` or `true`.  
 
     + **activity** — Type: `Boolean` Default: `false`  
     Specifies whether to enable the activity indicator animation that outputs the current spec that is being executed. If your tests log extra data to console, this option should be disabled or they might be overwritten.  
@@ -121,10 +121,10 @@ Defines a list of built-in Jasmine reporter configurations to be used. If omitte
     Specifies whether to show stack trace for failed specs.  
 
 - **reporters.teamcity**  
-    TeamCity Reporter that outputs test results for the Teamcity build system. There are no options to specify for this reporter. Just set this to `true` or `{}` to enable the reporter.   
+    TeamCity Reporter that outputs test results for the Teamcity build system. There are no options to specify for this reporter. Just set this to `true` to enable the reporter.   
 
 - **reporters.tap**  
-    Reporter for Test Anything Protocol ([TAP](http://en.wikipedia.org/wiki/Test_Anything_Protocol)), that outputs tests results to console. There are no options to specify for this reporter. Just set this to `true` or `{}` to enable the reporter.  
+    Reporter for Test Anything Protocol ([TAP](http://en.wikipedia.org/wiki/Test_Anything_Protocol)), that outputs tests results to console. There are no options to specify for this reporter. Just set this to `true` to enable the reporter.  
 
 
 #### customReporters
@@ -148,7 +148,7 @@ grunt.initConfig({
                 console: {
                     colors: true,
                     cleanStack: 1,       // (0|false)|(1|true)|2|3
-                    verbosity: 3,        // (0|false)|1|2|(3|true)
+                    verbosity: 4,        // (0|false)|1|2|3|(4|true)
                     listStyle: "indent", // "flat"|"indent"
                     activity: false
                 },
@@ -199,6 +199,13 @@ _Note 2: If you're migrating from v0.4.x, task options used for the default repo
   
 
 ## Changelog
+
+- **v1.4.2** (2015-07-05)  
+    + Console Reporter: Expanded `verbosity` levels (0 to 4). Setting to `3` will not report disabled specs anymore while listing others. Set to `4` (default) for the most verbose report. (Fixes [Issue #17](https://github.com/onury/grunt-jasmine-nodejs/issues/17))
+    + Console Reporter: `useHelpers` option does actually default to `true` now.
+    + Updated Jasmine-Core and other dependencies to their latest versions.
+    
+    ---
 
 - **v1.4.0** (2015-05-01)  
     + Updated Jasmine-Core, added support for latest Jasmine version (2.3.0). 

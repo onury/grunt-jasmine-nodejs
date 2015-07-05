@@ -59,7 +59,7 @@ module.exports = function (grunt) {
         var options = task.options({
             specNameSuffix: 'spec.js', // string or array
             helperNameSuffix: 'helper.js',
-            useHelpers: false,
+            useHelpers: true,
             reporters: {}
             // , customReporters: []
         });

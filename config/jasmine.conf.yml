@@ -13,7 +13,7 @@
             console: {
                 colors: true,
                 cleanStack: 1,       # (0|false)|(1|true)|2|3
-                verbosity: 3,        # (0|false)|1|2|(3|true)
+                verbosity: 4,        # (0|false)|1|2|(3|true)|4
                 listStyle: "indent", # "flat"|"indent"
                 activity: true
             },
@@ -56,11 +56,11 @@
         options: {
             reporters: {
                 console: {
-                    colors: false,
-                    cleanStack: 1,
-                    verbosity: 3,
+                    colors: true,
+                    cleanStack: 3,
+                    verbosity: 4,
                     listStyle: "indent",
-                    activity: true
+                    activity: false
                 }
             }
         },

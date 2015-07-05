@@ -42,9 +42,9 @@
     "LICENSE"
   ],
   "dependencies": {
-    "chalk": "^1.0.0",
-    "jasmine-core": "^2.3.0",
-    "jasmine-reporters": "^2.0.5"
+    "chalk": "^1.1.0",
+    "jasmine-core": "^2.3.4",
+    "jasmine-reporters": "^2.0.7"
   },
   "devDependencies": {
     "grunt": "^0.4.5"

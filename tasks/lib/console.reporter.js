@@ -94,7 +94,8 @@ module.exports = (function () {
             return stackLine;
         });
         // add back the first line and rest of stack
-        return style.red(first) + '\n' + stack.join('\n');
+        if (style) { first = style.red(first); }
+        return first + '\n' + stack.join('\n');
     }
 
     function extend(defaults, object) {
@@ -199,19 +200,20 @@ module.exports = (function () {
         this.name = 'Jasmine Console Reporter';
 
         options = options || {};
-        options.verbosity = optionBoolToNum(options.verbosity, 3, 0);
+        options.verbosity = optionBoolToNum(options.verbosity, 4, 0);
         options.cleanStack = optionBoolToNum(options.cleanStack, 1, 0);
 
         // extend options with defaults
         options = extend({
             colors: true,
             cleanStack: 1, // 0 to 3
-            verbosity: 3,  // 0 to 3
+            verbosity: 4,  // 0 to 4
             activity: false,
             listStyle: 'indent'
         }, options);
 
         var report = {
+            listAll: options.verbosity >= 4, // also list disabled specs
             list: options.verbosity >= 3,
             pendingSpecs: options.verbosity >= 2,
             stats: options.verbosity >= 1,
@@ -320,11 +322,18 @@ module.exports = (function () {
                     ind = listStyle.indent
                         ? repeat(_indentChar, (_depth + 1) * _indentUnit)
                         : '';
+
                 switch (spec.status) {
                 case 'pending':
                     title = style.yellow(symbol('warning') + ' ' + spec.description);
                     break;
                 case 'disabled':
+                    // we don't print disableds if verbosity < 4
+                    if (!report.listAll) {
+                        // clear the new line printed on spec-start
+                        print.clearLine();
+                        return;
+                    }
                     title = style.gray(symbol('disabled') + ' ' + spec.description);
                     break;
                 case 'failed':
@@ -336,6 +345,7 @@ module.exports = (function () {
                     title = style.green(symbol('success') + ' ' + spec.description);
                     break;
                 }
+
                 print.str(ind + title);
             },
             end: function () {
@@ -344,6 +354,15 @@ module.exports = (function () {
                 }
                 print.str(style.gray('>> Done!'));
                 print.newLine();
+            },
+            clearLine: function (num) {
+                num = num === undefined
+                    ? 1 : (num < 1 ? 1 : num);
+                var i;
+                for (i = 0; i < num; i++) {
+                    process.stdout.clearLine(0);
+                    process.stdout.moveCursor(0, -1);
+                }
             }
         };
 
@@ -557,6 +576,7 @@ module.exports = (function () {
                 stats.specs.passed++;
                 break;
             }
+
             print.spec(spec);
         };
 
@@ -564,7 +584,7 @@ module.exports = (function () {
             print.end();
             print.newLine();
             finalReport();
-            if (options.activity && activity) {
+            if (activity) {
                 activity = null;
             }
         };
