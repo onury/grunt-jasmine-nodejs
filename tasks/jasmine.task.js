@@ -83,6 +83,7 @@ module.exports = function (grunt) {
                 taskComplete(passed);
                 cc = 0;
             }
+            jasmineRunner.unloadHelpers(helperFiles);
         }
 
         // Extends default console reporter options
