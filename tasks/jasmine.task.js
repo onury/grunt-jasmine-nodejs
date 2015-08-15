@@ -66,7 +66,8 @@ module.exports = function (grunt) {
 
         var jasmineRunner = new JasmineRunner({ stopOnFailure: options.stopOnFailure }),
             enabledReporters = [],
-            ropts = options.reporters;
+            ropts = options.reporters,
+            helperFiles;
 
         // HELPER METHODS
 
@@ -83,7 +84,9 @@ module.exports = function (grunt) {
                 taskComplete(passed);
                 cc = 0;
             }
-            jasmineRunner.unloadHelpers(helperFiles);
+            if (_.isArray(helperFiles)) {
+                jasmineRunner.unloadHelpers(helperFiles);
+            }
         }
 
         // Extends default console reporter options
@@ -178,8 +181,8 @@ module.exports = function (grunt) {
 
         // Helper files
         if (options.useHelpers && options.helperNameSuffix) {
-            var helperSuffixes = ensureArray(options.helperNameSuffix, ','),
-                helperFiles = expand(conf.helpers || [], helperSuffixes);
+            var helperSuffixes = ensureArray(options.helperNameSuffix, ',');
+            helperFiles = expand(conf.helpers || [], helperSuffixes);
             grunt.verbose.writeln('Helper Files:\n  ', helperFiles);
             jasmineRunner.loadHelpers(helperFiles);
         }
