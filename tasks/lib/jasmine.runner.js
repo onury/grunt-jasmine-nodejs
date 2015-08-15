@@ -21,6 +21,12 @@ module.exports = (function () {
         });
     }
 
+    function unloadFiles(files) {
+        files.forEach(function (file) {
+            delete require.cache[file];
+        });
+    }
+
     //----------------------------
     //  CLASS: JasmineRunner
     //----------------------------
@@ -82,6 +88,8 @@ module.exports = (function () {
     JasmineRunner.prototype.addMatchers = function (matchers) {
         this.jasmine.Expectation.addMatchers(matchers);
     };
+
+    JasmineRunner.prototype.unloadHelpers = unloadFiles;
 
     JasmineRunner.prototype.loadHelpers = requireFiles;
 
