@@ -1,6 +1,5 @@
-# grunt-jasmine-nodejs
+# grunt-jasmine-nodejs [![grunt](http://img.shields.io/badge/grunt-^0.4.5-orange.svg)](http://gruntjs.com)
 
-[![grunt](http://img.shields.io/badge/grunt-^0.4.5-orange.svg)](http://gruntjs.com)
 [![version](http://img.shields.io/npm/v/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
 ![release](https://img.shields.io/github/release/onury/grunt-jasmine-nodejs.svg)
 [![downloads](http://img.shields.io/npm/dm/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
