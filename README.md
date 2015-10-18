@@ -1,5 +1,10 @@
 # grunt-jasmine-nodejs
 
+[![version](http://img.shields.io/npm/v/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
+[![downloads](http://img.shields.io/npm/dm/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
+[![grunt](http://img.shields.io/badge/grunt-^0.4.5-orange.svg)](http://gruntjs.com)
+[![grunt](http://img.shields.io/badge/license-MIT-8121e2.svg)](http://gruntjs.com)     
+
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, Terminal Reporter, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
 > Version: 1.4.3  
@@ -192,38 +197,38 @@ grunt.initConfig({
 });
 grunt.loadNpmTasks('grunt-jasmine-nodejs');
 ```
-  
+
 _Note 1: The target-level `reporters` object will override the task-level `reporters` object all together. They will not be merged._
 
 _Note 2: If you're migrating from v0.4.x, task options used for the default reporter (`showColors` and `verboseReport`) are now removed. Use the new (refactored) `reporters.console.colors` and `reporters.console.verbosity` options instead._
-  
+
 
 ## Changelog
 
 - **v1.4.3** (2015-08-15)  
     + Clear require cache to force helper files to be reloaded between executions. ([PR @domtronn](https://github.com/onury/grunt-jasmine-nodejs/pull/23))
-    
+
     ---
 
 - **v1.4.2** (2015-07-05)  
     + Console Reporter: Expanded `verbosity` levels (0 to 4). Setting to `3` will not report disabled specs anymore while listing others. Set to `4` (default) for the most verbose report. (Fixes [Issue #17](https://github.com/onury/grunt-jasmine-nodejs/issues/17))
     + Console Reporter: `useHelpers` option does actually default to `true` now.
     + Updated Jasmine-Core and other dependencies to their latest versions.
-    
+
     ---
 
 - **v1.4.0** (2015-05-01)  
-    + Updated Jasmine-Core, added support for latest Jasmine version (2.3.0). 
+    + Updated Jasmine-Core, added support for latest Jasmine version (2.3.0).
     _Note that all `xit` specs are now treated as `disabled` instead of `pending`._  
     + Added New Task Option: `stopOnFailure`. See documentation.  
     + Fixed an issue where the task would exit before completing all targets. (Fixes [Issue #15](https://github.com/onury/grunt-jasmine-nodejs/issues/15))  
     + Revised dependencies. Updated console reporter.  
-    
+
     ---
 
 - **v1.3.2** (2015-04-27)  
     + Console Reporter: Changed the default value of `report.console.activity` option to `false`. This should not be enabled if your tests log extra data to console. Fixed activity output.  
-    
+
     ---
 
 - **v1.3.0** (2015-04-21)  
@@ -267,7 +272,7 @@ _Note 2: If you're migrating from v0.4.x, task options used for the default repo
     + Console Reporter: Fixes for `null` stack trace & peer jasmine-core. ([PR #3](https://github.com/onury/grunt-jasmine-nodejs/pull/3) by [@fiznool](https://github.com/fiznool))  
 
     ---
-  
+
 - v0.4.0 (2015-03-01)  
     + Fixed a concatenation issue that would prevent helper-files from loading. (Fixes [Issue #1](https://github.com/onury/grunt-jasmine-nodejs/issues/1))  
     + Added new task option `verboseReport` which reports a verbose list of all suites.  
@@ -276,22 +281,19 @@ _Note 2: If you're migrating from v0.4.x, task options used for the default repo
     + Code clean-up.  
 
     ---
-  
+
 - v0.3.5 (2015-02-12)  
     + Console Reporter: Cleaner error stacks. Filtered out lines with jasmine-core path.  
     + Fixed a typo that caused the task to throw a `TypeError` when a test fails.  
     + Console Reporter: Better reporter console output.  
 
     ---
-  
+
 - v0.3.1 (2015-02-07)  
     + Console Reporter: Fixed timer (zero elapsed time) issue.  
 
     ---
-  
+
 - v0.3.0 (2015-02-07)  
     + Updated Jasmine-core to latest version (2.2.1).  
     + Added reporter for Jasmine output.  
-
-  
- 
