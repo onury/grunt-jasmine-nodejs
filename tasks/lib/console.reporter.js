@@ -356,6 +356,10 @@ module.exports = (function () {
                 print.newLine();
             },
             clearLine: function (num) {
+                if (!process.stdout.isTTY) {
+                    return;
+                }
+
                 num = num === undefined
                     ? 1 : (num < 1 ? 1 : num);
                 var i;
