@@ -46,6 +46,48 @@ module.exports = function (grunt) {
         });
     }
 
+	//------------------------------
+	//  SPEC FILTERING
+	//------------------------------
+
+	function specFilter(pattern, files) {
+    var specPattern,
+      patternArray,
+      filteredArray = [],
+      scriptSpecs = [],
+      matchPath = function(path) {
+        return !!path.match(specPattern);
+      };
+
+    if(pattern) {
+      // For '*' to work as a wildcard.
+      pattern = pattern.split("*").join("[\\S]*").replace(/\./g, "\\.");
+      // This allows for comma separated strings to which we can match the spec files.
+      patternArray = pattern.split(",");
+
+      while(patternArray.length > 0) {
+        pattern = (patternArray.splice(0, 1)[0]);
+
+        if(pattern.length > 0) {
+          if(pattern.indexOf('/') === -1) {
+            specPattern = new RegExp("("+pattern+"[^/]*)(?!/)$", "ig");
+          } else if(pattern.indexOf('/') === 0) {
+            specPattern = new RegExp("("+pattern+"[^/]*)(?=/)", "ig");
+          } else {
+            throw new TypeError("--filter flag seems to be in the wrong format.");
+          }
+
+          // push is usually faster than concat.
+          [].push.apply(scriptSpecs, files.filter(matchPath));
+        }
+      }
+
+      filteredArray = _.uniq(scriptSpecs);
+    }
+
+    return filteredArray;
+  }
+
     //-------------------------------------
     //  TASK DEFINITION
     //-------------------------------------
@@ -176,8 +218,15 @@ module.exports = function (grunt) {
 
         // Spec files
         var specSuffixes = ensureArray(options.specNameSuffix, ','),
-            specFiles = expand(conf.specs || [], specSuffixes);
+            specFiles = expand(conf.specs || [], specSuffixes),
+            gruntFilter = grunt.option('filter');
+
         grunt.verbose.writeln('Spec Files:\n  ', specFiles);
+
+        if (gruntFilter) {
+            specFiles = specFilter(gruntFilter, specFiles);
+            grunt.verbose.writeln('Filtered Spec Files:\n  ', specFiles);
+        }
 
         // Helper files
         if (options.useHelpers && options.helperNameSuffix) {

@@ -35,6 +35,11 @@ _The `--verbose` option will additionally output list of enabled reporters, spec
 
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 
+The `--filter` option will filter the sepc files by their **file names** that match the filter.
+```js
+grunt jasmine_nodejs --filter=foo,bar
+```
+
 ### Options
 
 #### specNameSuffix
