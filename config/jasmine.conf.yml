@@ -6,7 +6,11 @@
         specNameSuffix: "spec.js", # also accepts an array
         helperNameSuffix: "helper.js",
         useHelpers: false,
+        random: false,
+        seed: null,
+        # defaultTimeout: 10000,
         stopOnFailure: false,
+        traceFatal: true,           # (0|false)|(1|true)|2
         # options for built-in reporters
         reporters: {
             # console (default) reporter

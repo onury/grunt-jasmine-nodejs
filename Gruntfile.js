@@ -1,4 +1,4 @@
-/*jslint node:true, nomen:true, unparam:true, vars:true, plusplus:true */
+/* eslint camelcase:0 */
 
 module.exports = function (grunt) {
     'use strict';
@@ -11,5 +11,6 @@ module.exports = function (grunt) {
     grunt.loadTasks('tasks');
 
     grunt.registerTask('default', ['jasmine_nodejs:calc', 'jasmine_nodejs:other']);
+    grunt.registerTask('single', ['jasmine_nodejs:other']);
 
 };

@@ -1,17 +1,22 @@
-/*jslint node:true, nomen:true, unparam:true, plusplus:true, vars:true */
-/*global jasmine, describe, fdescribe, xdescribe, before, beforeEach, beforeAll, after, afterEach, afterAll, it, fit, xit, expect, pending, mostRecentAjaxRequest, qq, runs, spyOn, spyOnEvent, waitsFor, confirm, context */
-
 (function () {
     'use strict';
 
     function Calculator() {}
     var proto = Calculator.prototype;
-    proto.add = function add(a, b) { return a + b; };
-    proto.subtract = function subtract(a, b) { return a - b; };
-    proto.divide = function divide(a, b) { return a / b; };
-    proto.multiply = function multiply(a, b) { return a * b; };
+    proto.add = function add(a, b) {
+        return a + b;
+    };
+    proto.subtract = function subtract(a, b) {
+        return a - b;
+    };
+    proto.divide = function divide(a, b) {
+        return a / b;
+    };
+    proto.multiply = function multiply(a, b) {
+        return a * b;
+    };
 
-    describe('Calculator Suite', function () {
+    xdescribe('Calculator Suite', function () {
         var calculator,
             a = 10,
             b = 2;
@@ -51,4 +56,4 @@
 
     });
 
-}());
+})();

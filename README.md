@@ -7,7 +7,7 @@
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, Terminal Reporter, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
-> Author: Onur Yıldırım (onury) © 2015  
+> Author: Onur Yıldırım (onury) © 2016  
 > Licensed under the MIT License.  
 
 ![Example Screenshot](https://raw.github.com/onury/grunt-jasmine-nodejs/master/screenshots/verbose-report.jpg)
@@ -52,10 +52,30 @@ Case-insensitive suffix(es) for the helper files, including the extension. Only 
 Type: `Boolean`  Default: `true`  
 Specifies whether to execute the helper files.
 
+#### random
+
+Type: `Boolean`  Default: `false`  
+Specifies whether to run specs in semi-random order. Helpful for detecting inter-dependencies in between the specs.
+
+#### seed
+
+Type: `Number`  Default: `null`  
+Sets the randomization seed if randomization is turned on.
+
+#### defaultTimeout
+
+Type: `Number`  Default: `5000`  
+By default Jasmine will wait for 5 seconds for an asynchronous spec to finish before causing a timeout failure. If the timeout expires before done is called, the current spec will be marked as failed and suite execution will continue as if done was called. You can set the default timeout value (in milliseconds) globally with this option. To set/change the timeout for a particular spec, just pass a third argument to the spec.
+
 #### stopOnFailure
 
 Type: `Boolean`  Default: `false`  
 Specifies whether to stop running further tests, on first expectation-failure. This can be useful if you want to debug your failed specs one by one. _Note: Regardless of this option; the runner will still stop on suite failures (such as errors thrown in `afterAll`, etc) and as normal, Grunt will abort when a task/target fails._
+
+#### traceFatal
+
+Type: `Number|Boolean`  Default: `1`  
+On a fatal error (i.e. `uncaughtException`), Grunt exits the process without a stack trace. This option forces Grunt to output the stack trace. Possible integer values: 0 to 2. Set to `1` (or `true`) to only trace fatal errors. Set to `2` to also trace grunt warnings. This can also be achieved by the `grunt --stack` command.
 
 #### reporters
 
@@ -146,7 +166,11 @@ grunt.initConfig({
             specNameSuffix: "spec.js", // also accepts an array
             helperNameSuffix: "helper.js",
             useHelpers: false,
+            random: false,
+            seed: null,
+            defaultTimeout: null, // defaults to 5000
             stopOnFailure: false,
+            traceFatal: true,
             // configure one or more built-in reporters
             reporters: {
                 console: {
@@ -197,12 +221,21 @@ grunt.initConfig({
 grunt.loadNpmTasks('grunt-jasmine-nodejs');
 ```
 
-_Note 1: The target-level `reporters` object will override the task-level `reporters` object all together. They will not be merged._
-
-_Note 2: If you're migrating from v0.4.x, task options used for the default reporter (`showColors` and `verboseReport`) are now removed. Use the new (refactored) `reporters.console.colors` and `reporters.console.verbosity` options instead._
+_Note: The target-level `reporters` object will override the task-level `reporters` object all together. They will not be merged._
 
 
-## Changelog
+## Change-Log
+
+- **v1.5.0** (2016-02-26)  
+    + Updated Jasmine-Core (v2.4.1) and other dependencies to latest versions.
+    + Added new (Jasmine) task options: `random`, `seed` and `defaultTimeout`. See docs.
+    + Added new task option: `traceFatal`. See docs. (Fixes [Issue #31](https://github.com/onury/grunt-jasmine-nodejs/issues/31))
+    + Moved Console Reporter to its [own repo](https://github.com/onury/jasmine-console-reporter).
+    + Removed *lodash* dependency (`grunt.util._` is deprecated).
+    + Updated `peerDependencies` to support Grunt 1.0.
+    + Code revisions and clean-up.
+
+    ---
 
 - **v1.4.3** (2015-08-15)  
     + Clear require cache to force helper files to be reloaded between executions. ([PR @domtronn](https://github.com/onury/grunt-jasmine-nodejs/pull/23))

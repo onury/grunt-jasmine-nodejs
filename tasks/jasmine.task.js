@@ -1,5 +1,3 @@
-/*jslint node:true, nomen:true, unparam:true, vars:true, plusplus:true */
-
 /**
  *  Jasmine Grunt Task for NodeJS.
  *  @author   Onur Yıldırım (onur@cutepilot.com)
@@ -8,25 +6,31 @@
 module.exports = function (grunt) {
     'use strict';
 
-    var JasmineRunner = require('./lib/jasmine.runner'),
-        ConsoleReporter = require('./lib/console.reporter'),
-        reporters = require('jasmine-reporters'),
-        path = require('path'),
-        _ = grunt.util._;
+    // Core modules
+    var path = require('path');
 
-    //-------------------------------------
+    // Own modules
+    var JasmineRunner = require('./lib/jasmine.runner');
+
+    // Dep modules
+    var reporters = require('jasmine-reporters'),
+        JasmineConsoleReporter = require('jasmine-console-reporter');
+
+    // --------------------------------
     //  UTILITY METHODS
-    //-------------------------------------
+    // --------------------------------
 
     function ensureArray(value, delim) {
-        return !_.isArray(value)
+        return !Array.isArray(value)
             ? (value || '').split(delim)
             : value;
     }
 
     function hasSuffix(suffixes, filePath) {
-        return _.some(suffixes, function (suffix) {
-            return _.endsWith(filePath.toLowerCase(), suffix.toLowerCase());
+        return (suffixes || []).some(function (suffix) {
+            return filePath
+                ? filePath.toLowerCase().endsWith(suffix.toLowerCase())
+                : false;
         });
     }
 
@@ -41,14 +45,14 @@ module.exports = function (grunt) {
         // filter and expand glob
         var files = grunt.file.expand(options, glob);
         // resolve file paths
-        return _.map(files, function (file) {
+        return files.map(function (file) {
             return path.resolve(file);
         });
     }
 
-    //-------------------------------------
+    // --------------------------------
     //  TASK DEFINITION
-    //-------------------------------------
+    // --------------------------------
 
     grunt.registerMultiTask('jasmine_nodejs', 'Jasmine Grunt Task for NodeJS.', function () {
         var task = this,
@@ -60,11 +64,21 @@ module.exports = function (grunt) {
             specNameSuffix: 'spec.js', // string or array
             helperNameSuffix: 'helper.js',
             useHelpers: true,
+            random: false,
+            seed: null,
+            defaultTimeout: null, // defaults to 5000
+            stopOnFailure: false,
+            traceFatal: true,
             reporters: {}
             // , customReporters: []
         });
 
-        var jasmineRunner = new JasmineRunner({ stopOnFailure: options.stopOnFailure }),
+        var jasmineRunner = new JasmineRunner({
+                stopOnFailure: options.stopOnFailure,
+                random: options.random,
+                seed: options.seed,
+                defaultTimeout: options.defaultTimeout
+            }),
             enabledReporters = [],
             ropts = options.reporters,
             helperFiles;
@@ -84,7 +98,7 @@ module.exports = function (grunt) {
                 taskComplete(passed);
                 cc = 0;
             }
-            if (_.isArray(helperFiles)) {
+            if (Array.isArray(helperFiles)) {
                 jasmineRunner.unloadHelpers(helperFiles);
             }
         }
@@ -130,7 +144,7 @@ module.exports = function (grunt) {
 
         // We will not allow reporters producing command-line output to run at
         // the same time, to prevent puzzled outputs.
-        var conflict = !!ropts.console;
+        var conflict = Boolean(ropts.console);
         if (!conflict && ropts.terminal) {
             conflict = true;
             reporter = new reporters.TerminalReporter(ropts.terminal);
@@ -152,7 +166,7 @@ module.exports = function (grunt) {
 
         // CUSTOM JASMINE REPORTERS
 
-        if (_.isArray(options.customReporters)) {
+        if (Array.isArray(options.customReporters)) {
             options.customReporters.forEach(function (customReporter, index) {
                 customReporter.name = customReporter.name
                     || 'Custom Reporter #' + (index + 1);
@@ -165,12 +179,46 @@ module.exports = function (grunt) {
         // Finally add the default (console) reporter if set/needed.
         if (enabledReporters.length === 0 || ropts.console) {
             var crOpts = getConsoleReporterOpts(ropts.console),
-                consoleReporter = new ConsoleReporter(crOpts);
+                consoleReporter = new JasmineConsoleReporter(crOpts);
             // consoleReporter already has `name` property defined
             addReporter(consoleReporter);
         }
 
         grunt.verbose.writeln('Enabled Reporters:\n  ', enabledReporters.join(', ') || 'none');
+
+        // UNCAUGHT/FATAL EXCEPTION STACKS
+
+        // On a fatal error (i.e. uncaughtException), Grunt exits the process
+        // without a stack trace. We'll force Grunt to output the stack trace.
+        // This can be done by the --stack option which is false by default.
+        // But this will also output warnings (such as "task failed") in addition
+        // to fatal errors.
+
+        // We need a named function to check whether this is previously added.
+        // Bec. since this is a "multi" task, this handler will get added
+        // every time.
+        function _taskFatalHandler_(e) {
+            grunt.fatal(e.stack, grunt.fail.code.TASK_FAILURE);
+        }
+        // The default Grunt handler:
+        // function (e) { fail.fatal(e, fail.code.TASK_FAILURE); }
+
+        if (options.traceFatal === 1 || options.traceFatal === true) {
+            var handlers = process.listeners('uncaughtException'),
+                alreadyAdded = handlers.some(function (handler) {
+                    return handler.name === '_taskFatalHandler_';
+                });
+            if (!alreadyAdded) {
+                process.removeAllListeners('uncaughtException');
+                // add the handler before any other
+                handlers.unshift(_taskFatalHandler_);
+                handlers.forEach(function (handler) {
+                    process.on('uncaughtException', handler);
+                });
+            }
+        } else if (options.traceFatal === 2) {
+            grunt.option('stack', true);
+        }
 
         // EXECUTE SPEC (and HELPER) FILES
 

@@ -1,0 +1,26 @@
+{
+    "parserOptions": {
+    },
+    "env": {
+        "node": true,
+        "jasmine": true
+    },
+    "plugins": [
+
+    ],
+    "globals": {
+    },
+    "extends": "xo",
+    // "extends": "eslint:recommended",
+    "rules": {
+        "indent": [2, 4, {"SwitchCase": 1}],
+        "curly": [2, "multi-line", "consistent"],
+        "one-var": 0,
+        "no-unused-vars": 1,
+        "object-curly-spacing": 0,
+        "operator-linebreak": 0,
+        "padded-blocks": 0,
+        "no-negated-condition": 0,
+        "quote-props": 0
+    }
+}

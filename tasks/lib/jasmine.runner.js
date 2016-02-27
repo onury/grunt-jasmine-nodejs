@@ -1,9 +1,7 @@
-/*jslint node:true, devel:false, nomen:true, regexp:true, unparam:true, vars:true, plusplus:true */
-
 /**
  *  Jasmine.Runner
  *  @author   Onur Yıldırım (onur@cutepilot.com)
- *  @version  1.0.0 (2015-05-01)
+ *  @version  1.0.5 (2016-02-26)
  *  @license  MIT
  */
 module.exports = (function () {
@@ -11,9 +9,9 @@ module.exports = (function () {
 
     var jasmineCore = require('jasmine-core');
 
-    //----------------------------
+    // ---------------------------
     //  Helper Methods
-    //----------------------------
+    // ---------------------------
 
     function requireFiles(files) {
         files.forEach(function (file) {
@@ -27,15 +25,20 @@ module.exports = (function () {
         });
     }
 
-    //----------------------------
+    // ---------------------------
     //  CLASS: JasmineRunner
-    //----------------------------
+    // ---------------------------
 
     function JasmineRunner(options) {
         options = options || {};
         this.jasmine = jasmineCore.boot(jasmineCore);
         this.env = this.jasmine.getEnv();
-        this.env.throwOnExpectationFailure(!!options.stopOnFailure);
+        this.env.throwOnExpectationFailure(Boolean(options.stopOnFailure));
+        this.env.randomizeTests(Boolean(options.random));
+        this.env.seed(Boolean(options.seed));
+        if (typeof options.defaultTimeout === 'number' && options.defaultTimeout > 0) {
+            this.jasmine.DEFAULT_TIMEOUT_INTERVAL = options.defaultTimeout;
+        }
         this._reporters = [];
     }
 
@@ -81,7 +84,7 @@ module.exports = (function () {
         return reporter;
     };
 
-    JasmineRunner.prototype.getReporters = function (reporter) {
+    JasmineRunner.prototype.getReporters = function () {
         return this._reporters;
     };
 
@@ -99,10 +102,10 @@ module.exports = (function () {
         this.env.execute();
     };
 
-    //----------------------------
+    // ---------------------------
     //  EXPORT
-    //----------------------------
+    // ---------------------------
 
     return JasmineRunner;
 
-}());
+})();

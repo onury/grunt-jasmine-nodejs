@@ -1,13 +1,10 @@
-/*jslint node:true, unparam:true */
-/*global jasmine, beforeEach */
-
 beforeEach(function () {
     'use strict';
 
     jasmine.addMatchers({
         toBeNegative: function () {
             return {
-                compare: function (actual, expected) {
+                compare: function (actual) { // (actual, expected)
                     return {
                         pass: actual < 0
                     };
@@ -16,7 +13,7 @@ beforeEach(function () {
         },
         toBePositive: function () {
             return {
-                compare: function (actual, expected) {
+                compare: function (actual) { // (actual, expected)
                     return {
                         pass: actual >= 0
                     };

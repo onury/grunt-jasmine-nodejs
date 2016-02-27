@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<test-results name="Test Results" total="4" failures="0" not-run="1" date="2015-08-15" time="16:56:37">
- <test-suite name="Calculator Suite" executed="true" success="true" time="4.012">
+<test-results name="Test Results" total="4" failures="0" not-run="4" date="2016-02-27" time="02:53:41">
+ <test-suite name="Calculator Suite" executed="true" success="true" time="0.008">
   <results>
-   <test-case name="should add numbers" executed="true" success="true" time="0.003">
+   <test-case name="should add numbers" executed="false" success="true" time="0.001">
    </test-case>
-   <test-case name="should execute async spec..." executed="true" success="true" time="4.003">
+   <test-case name="should execute async spec..." executed="false" success="true" time="0.001">
    </test-case>
-   <test-case name="should subtract numbers" executed="true" success="true" time="0">
+   <test-case name="should subtract numbers" executed="false" success="true" time="0">
    </test-case>
-   <test-case name="should multiply numbers (final)" executed="false" success="true" time="0.001">
+   <test-case name="should multiply numbers (final)" executed="false" success="true" time="0">
    </test-case>
   </results>
  </test-suite>
