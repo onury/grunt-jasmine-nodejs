@@ -35,6 +35,11 @@ _The `--verbose` option will additionally output list of enabled reporters, spec
 
 Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
 
+The `--filter` option will filter the spec files by their **file names** that match the filter.
+```js
+grunt jasmine_nodejs --filter=foo,bar
+```
+
 ### Options
 
 #### specNameSuffix
@@ -231,9 +236,8 @@ _Note: The target-level `reporters` object will override the task-level `reporte
     + Added new (Jasmine) task options: `random`, `seed` and `defaultTimeout`. See docs.
     + Added new task option: `traceFatal`. See docs. (Fixes [Issue #31](https://github.com/onury/grunt-jasmine-nodejs/issues/31))
     + Moved Console Reporter to its [own repo](https://github.com/onury/jasmine-console-reporter).
-    + Removed *lodash* dependency (`grunt.util._` is deprecated).
     + Updated `peerDependencies` to support Grunt 1.0.
-    + Code revisions and clean-up.
+    + Code revisions and clean-up. (Also removed `grunt.util._` refs (deprecated) in favor of `lodash` as a dep.)
 
     ---
 
