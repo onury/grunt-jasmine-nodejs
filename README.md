@@ -238,6 +238,11 @@ _Note: The target-level `reporters` object will override the task-level `reporte
 
     ---
 
+- **v1.4.4** (2016-02-18)  
+    + Added the `--filter` option for the task. ([PR @domtronn](https://github.com/onury/grunt-jasmine-nodejs/pull/26))
+
+    ---
+
 - **v1.4.3** (2015-08-15)  
     + Clear require cache to force helper files to be reloaded between executions. ([PR @domtronn](https://github.com/onury/grunt-jasmine-nodejs/pull/23))
 
