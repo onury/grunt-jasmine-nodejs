@@ -1,7 +1,7 @@
 /**
  *  Jasmine.Runner
  *  @author   Onur Yıldırım (onur@cutepilot.com)
- *  @version  1.0.5 (2016-02-26)
+ *  @version  1.0.6 (2016-02-27)
  *  @license  MIT
  */
 module.exports = (function () {
@@ -36,7 +36,7 @@ module.exports = (function () {
         this.env.throwOnExpectationFailure(Boolean(options.stopOnFailure));
         this.env.randomizeTests(Boolean(options.random));
         this.env.seed(Boolean(options.seed));
-        if (typeof options.defaultTimeout === 'number' && options.defaultTimeout > 0) {
+        if (typeof options.defaultTimeout === 'number' && options.defaultTimeout >= 0) {
             this.jasmine.DEFAULT_TIMEOUT_INTERVAL = options.defaultTimeout;
         }
         this._reporters = [];
