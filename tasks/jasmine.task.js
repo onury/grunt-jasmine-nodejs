@@ -27,10 +27,16 @@ module.exports = function (grunt) {
             : value;
     }
 
+    function endsWith(str, suffix) {
+        if (!str || !suffix) return false;
+        return str.toLowerCase().indexOf(suffix.toLowerCase())
+            === str.length - suffix.length;
+    }
+
     function hasSuffix(suffixes, filePath) {
         return (suffixes || []).some(function (suffix) {
             return filePath
-                ? filePath.toLowerCase().endsWith(suffix.toLowerCase())
+                ? endsWith(filePath, suffix)
                 : false;
         });
     }
