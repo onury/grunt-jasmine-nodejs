@@ -229,6 +229,11 @@ _Note: The target-level `reporters` object will override the task-level `reporte
 
 ## Change-Log
 
+- **v1.5.1** (2016-03-01)  
+    + Removed `String.prototype.endsWith()` ES6 method. (Fixes [Issue #32](https://github.com/onury/grunt-jasmine-nodejs/issues/32)).
+
+    ---
+
 - **v1.5.0** (2016-02-26)  
     + Updated Jasmine-Core (v2.4.1) and other dependencies to latest versions.
     + Added new (Jasmine) task options: `random`, `seed` and `defaultTimeout`. See docs.
