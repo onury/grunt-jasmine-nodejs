@@ -90,8 +90,8 @@ Defines a list of built-in Jasmine reporter configurations to be used. If omitte
 - **reporters.console**  
     The built-in default reporter that outputs the detailed test results to the console, with colors.  
 
-    + **colors** — Type: `Boolean` Default: `true`  
-    Specifies whether the output should have colored text.  
+    + **colors** — Type: `Number|Boolean` Default: `1`  
+    Specifies whether the output should have colored text. Possible integer values: 0 to 2. Set to `1` (or `true`) to enable colors. Set to `2` to use the [ANSI escape codes](https://www.npmjs.com/package/chalk#chalkstyles). Option `2` can be useful if, for example, you're running your tests from a sub-process, and the colors aren't showing up. 
 
     + **cleanStack** — Type: `Number|Boolean` Default: `1`  
     Specifies the filter level for the error stacks. Possible integer values: 0 to 3. Set to `1` (or `true`) to only filter out lines with jasmine-core path from stacks. Set to `2` to filter out all `node_modules` paths. Set to `3` to also filter out lines with no file path in it.  
@@ -177,7 +177,7 @@ grunt.initConfig({
             // configure one or more built-in reporters
             reporters: {
                 console: {
-                    colors: true,
+                    colors: true,        // (0|false)|(1|true)|2
                     cleanStack: 1,       // (0|false)|(1|true)|2|3
                     verbosity: 4,        // (0|false)|1|2|3|(4|true)
                     listStyle: "indent", // "flat"|"indent"
@@ -228,6 +228,11 @@ _Note: The target-level `reporters` object will override the task-level `reporte
 
 
 ## Change-Log
+
+- **v1.5.2** (2016-03-18)  
+    + Updated dependency `jasmine-console-reporter` which improved the `colors` option to support ANSI escape codes.
+
+    ---
 
 - **v1.5.1** (2016-03-01)  
     + Removed `String.prototype.endsWith()` ES6 method. (Fixes [Issue #32](https://github.com/onury/grunt-jasmine-nodejs/issues/32)).

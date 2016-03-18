@@ -43,7 +43,7 @@
   ],
   "dependencies": {
     "chalk": "^1.1.1",
-    "jasmine-console-reporter": "^1.2.2",
+    "jasmine-console-reporter": "^1.2.4",
     "jasmine-core": "^2.4.1",
     "jasmine-reporters": "^2.1.1",
     "lodash": "^4.5.1"
