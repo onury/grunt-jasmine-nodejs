@@ -246,7 +246,8 @@ module.exports = function (grunt) {
         // Bec. since this is a "multi" task, this handler will get added
         // every time.
         function _taskFatalHandler_(e) {
-            grunt.fatal(e.stack, grunt.fail.code.TASK_FAILURE);
+            var err = e ? (e.stack || e.message || e) : 'Unknown Error';
+            grunt.fatal(err, grunt.fail.code.TASK_FAILURE);
         }
         // The default Grunt handler:
         // function (e) { fail.fatal(e, fail.code.TASK_FAILURE); }

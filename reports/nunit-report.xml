@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<test-results name="Test Results" total="4" failures="0" not-run="4" date="2016-03-18" time="17:39:57">
+<test-results name="Test Results" total="4" failures="0" not-run="4" date="2016-05-09" time="23:55:01">
  <test-suite name="Calculator Suite" executed="true" success="true" time="0.007">
   <results>
    <test-case name="should add numbers" executed="false" success="true" time="0.002">
@@ -8,7 +8,7 @@
    </test-case>
    <test-case name="should subtract numbers" executed="false" success="true" time="0">
    </test-case>
-   <test-case name="should multiply numbers (final)" executed="false" success="true" time="0">
+   <test-case name="should multiply numbers (final)" executed="false" success="true" time="0.001">
    </test-case>
   </results>
  </test-suite>

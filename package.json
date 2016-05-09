@@ -42,16 +42,16 @@
     "LICENSE"
   ],
   "dependencies": {
-    "chalk": "^1.1.1",
-    "jasmine-console-reporter": "^1.2.4",
+    "grunt": "^1.0.1",
+    "jasmine-console-reporter": "^1.2.6",
     "jasmine-core": "^2.4.1",
     "jasmine-reporters": "^2.1.1",
-    "lodash": "^4.5.1"
+    "lodash": "^4.12.0"
   },
   "devDependencies": {
-    "eslint": "^2.2.0",
-    "eslint-config-xo": "^0.11.0",
-    "grunt": "^0.4.5"
+    "eslint": "^2.9.0",
+    "eslint-config-xo": "^0.14.1",
+    "grunt": "^1.0.1"
   },
   "peerDependencies": {
     "grunt": ">=0.4.5"

@@ -229,6 +229,13 @@ _Note: The target-level `reporters` object will override the task-level `reporte
 
 ## Change-Log
 
+- **v1.5.3** (2016-05-09)  
+    + Revised fatal error handler. (issue [#34](https://github.com/onury/grunt-jasmine-nodejs/issues/34).)
+    + Updated `jasmine-console-reporter ` which fixes issue [#33](https://github.com/onury/grunt-jasmine-nodejs/issues/33).
+    + Updated dependencies to their latest versions.
+
+    ---
+
 - **v1.5.2** (2016-03-18)  
     + Updated dependency `jasmine-console-reporter` which improved the `colors` option to support ANSI escape codes.
 

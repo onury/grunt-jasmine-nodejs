@@ -9,7 +9,7 @@
         it('Suite 1, Spec 2', function () {
             expect(true).toEqual(true);
         });
-        xit('Suite 1, Spec 3', function (done) {
+        it('Suite 1, Spec 3', function (done) {
             expect(false).toEqual(true);
             done();
             // setTimeout(function () {
