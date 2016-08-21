@@ -64,15 +64,15 @@ Sets the randomization seed if randomization is turned on.
 
 By default Jasmine will wait for 5 seconds for an asynchronous spec to finish before causing a timeout failure. If the timeout expires before done is called, the current spec will be marked as failed and suite execution will continue as if done was called. You can set the default timeout value (in milliseconds) globally with this option. To set/change the timeout for a particular spec, just pass a third argument to the spec.
 
-**stopOnFailure** : `Boolean`  Default: `false`  
+**stopOnFailure** : `Boolean` — Default: `false`  
 
 Specifies whether to stop running further tests, on first expectation-failure. This can be useful if you want to debug your failed specs one by one. _Note: Regardless of this option; the runner will still stop on suite failures (such as errors thrown in `afterAll`, etc) and as normal, Grunt will abort when a task/target fails._
 
-**traceFatal** : `Number|Boolean`  Default: `1`  
+**traceFatal** : `Number|Boolean` — Default: `1`  
 
 On a fatal error (i.e. `uncaughtException`), Grunt exits the process without a stack trace. This option forces Grunt to output the stack trace. Possible integer values: 0 to 2. Set to `1` (or `true`) to only trace fatal errors. Set to `2` to also trace grunt warnings. This can also be achieved by the `grunt --stack` command.
 
-**reporters** : `Object`  Default: `undefined`  
+**reporters** : `Object` — Default: `undefined`  
 
 Defines a list of built-in Jasmine reporter configurations to be used. If omitted, `console` reporter will be used as default. See the definitions and corresponding options for each reporter below.  
 
