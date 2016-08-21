@@ -19,7 +19,7 @@ This plugin requires Grunt `^0.4.5`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-jasmine-nodejs --save-dev
+npm i grunt-jasmine-nodejs --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
@@ -91,7 +91,7 @@ Defines a list of built-in Jasmine reporter configurations to be used. If omitte
     The built-in default reporter that outputs the detailed test results to the console, with colors.  
 
     + **colors** — Type: `Number|Boolean` Default: `1`  
-    Specifies whether the output should have colored text. Possible integer values: 0 to 2. Set to `1` (or `true`) to enable colors. Set to `2` to use the [ANSI escape codes](https://www.npmjs.com/package/chalk#chalkstyles). Option `2` can be useful if, for example, you're running your tests from a sub-process, and the colors aren't showing up. 
+    Specifies whether the output should have colored text. Possible integer values: 0 to 2. Set to `1` (or `true`) to enable colors. Set to `2` to use the [ANSI escape codes](https://www.npmjs.com/package/chalk#chalkstyles). Option `2` can be useful if, for example, you're running your tests from a sub-process, and the colors aren't showing up.
 
     + **cleanStack** — Type: `Number|Boolean` Default: `1`  
     Specifies the filter level for the error stacks. Possible integer values: 0 to 3. Set to `1` (or `true`) to only filter out lines with jasmine-core path from stacks. Set to `2` to filter out all `node_modules` paths. Set to `3` to also filter out lines with no file path in it.  
@@ -228,6 +228,13 @@ _Note: The target-level `reporters` object will override the task-level `reporte
 
 
 ## Change-Log
+
+- **v1.5.4** (2016-08-21)  
+    + Console Reporter: `cleanStack` option would render the first line as the error message, not respecting messages with `\n` (new-line) in them. Fixed.
+    + (#dev) Added before/after tests.
+    + Updated dependencies to their latest versions.
+
+    ---
 
 - **v1.5.3** (2016-05-09)  
     + Revised fatal error handler. (issue [#34](https://github.com/onury/grunt-jasmine-nodejs/issues/34).)
