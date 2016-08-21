@@ -40,123 +40,113 @@ The `--filter` option will filter the spec files by their **file names** that ma
 
 ### Options
 
-#### specNameSuffix
+**specNameSuffix** : `String|Array` — Default: `"spec.js"`  
 
-Type: `String|Array`  Default: `"spec.js"`  
 Case-insensitive suffix(es) for the spec files, including the extension. Only files ending with this suffix will be executed within the specified `specs` destination(s).
 
-#### helperNameSuffix
+**helperNameSuffix** : `String|Array` — Default: `"helper.js"`  
 
-Type: `String|Array`  Default: `"helper.js"`  
 Case-insensitive suffix(es) for the helper files, including the extension. Only files ending with this suffix will be executed within the specified `helpers` destination(s).
 
-#### useHelpers
+**useHelpers** : `Boolean` — Default: `true`  
 
-Type: `Boolean`  Default: `true`  
 Specifies whether to execute the helper files.
 
-#### random
+**random** : `Boolean` — Default: `false`  
 
-Type: `Boolean`  Default: `false`  
 Specifies whether to run specs in semi-random order. Helpful for detecting inter-dependencies in between the specs.
 
-#### seed
+**seed** : `Number` — Default: `null`  
 
-Type: `Number`  Default: `null`  
 Sets the randomization seed if randomization is turned on.
 
-#### defaultTimeout
+**defaultTimeout** : `Number` — Default: `5000`  
 
-Type: `Number`  Default: `5000`  
 By default Jasmine will wait for 5 seconds for an asynchronous spec to finish before causing a timeout failure. If the timeout expires before done is called, the current spec will be marked as failed and suite execution will continue as if done was called. You can set the default timeout value (in milliseconds) globally with this option. To set/change the timeout for a particular spec, just pass a third argument to the spec.
 
-#### stopOnFailure
+**stopOnFailure** : `Boolean`  Default: `false`  
 
-Type: `Boolean`  Default: `false`  
 Specifies whether to stop running further tests, on first expectation-failure. This can be useful if you want to debug your failed specs one by one. _Note: Regardless of this option; the runner will still stop on suite failures (such as errors thrown in `afterAll`, etc) and as normal, Grunt will abort when a task/target fails._
 
-#### traceFatal
+**traceFatal** : `Number|Boolean`  Default: `1`  
 
-Type: `Number|Boolean`  Default: `1`  
 On a fatal error (i.e. `uncaughtException`), Grunt exits the process without a stack trace. This option forces Grunt to output the stack trace. Possible integer values: 0 to 2. Set to `1` (or `true`) to only trace fatal errors. Set to `2` to also trace grunt warnings. This can also be achieved by the `grunt --stack` command.
 
-#### reporters
+**reporters** : `Object`  Default: `undefined`  
 
-Type: `Object`  Default: `undefined`  
 Defines a list of built-in Jasmine reporter configurations to be used. If omitted, `console` reporter will be used as default. See the definitions and corresponding options for each reporter below.  
 
 > _Note that reporters producing command-line output (such as console, terminal, teamcity and tap reporters), are not allowed to run at the same time, to prevent puzzled outputs. If still enabled, only the first one (in respective order) will be used. This is not the case for reporters producing a file._  
 
-- **reporters.console**  
+- **reporters.console** : `Object`  
     The built-in default reporter that outputs the detailed test results to the console, with colors.  
 
-    + **colors** — Type: `Number|Boolean` Default: `1`  
+    + **colors** : `Number|Boolean` — Default: `1`  
     Specifies whether the output should have colored text. Possible integer values: 0 to 2. Set to `1` (or `true`) to enable colors. Set to `2` to use the [ANSI escape codes](https://www.npmjs.com/package/chalk#chalkstyles). Option `2` can be useful if, for example, you're running your tests from a sub-process, and the colors aren't showing up.
 
-    + **cleanStack** — Type: `Number|Boolean` Default: `1`  
+    + **cleanStack** : `Number|Boolean` — Default: `1`  
     Specifies the filter level for the error stacks. Possible integer values: 0 to 3. Set to `1` (or `true`) to only filter out lines with jasmine-core path from stacks. Set to `2` to filter out all `node_modules` paths. Set to `3` to also filter out lines with no file path in it.  
 
-    + **verbosity** — Type: `Number|Boolean` Default: `4`  
+    + **verbosity** : `Number|Boolean` — Default: `4`  
     (_alias: `verbose`_) Specifies the verbosity level for the reporter output. Possible integer values: 0 to 4. When a `Boolean` value is passed, `true` defaults to `4` and `false` defaults to `0`. Level 0: reports errors only. Level 1: also displays a summary. Level 2: also reports pending specs. Level 3: additionally displays all suites and specs as a list, except disabled specs. Level 4: also lists disabled specs.  
 
-    + **listStyle** — Type: `String` Default: `"indent"`  
+    + **listStyle** : `String` — Default: `"indent"`  
     Indicates the style of suites/specs list output. Possible values: `"flat"` or `"indent"`. Setting this to `"indent"` provides a better view especially when using nested (describe) suites. This option is only effective when verbosity level is set to `3`, `4` or `true`.  
 
-    + **activity** — Type: `Boolean` Default: `false`  
+    + **activity** : `Boolean` — Default: `false`  
     Specifies whether to enable the activity indicator animation that outputs the current spec that is being executed. If your tests log extra data to console, this option should be disabled or they might be overwritten.  
 
-- **reporters.junit**  
+- **reporters.junit** : `Object`  
     JUnit XML Reporter that outputs test results to a file in JUnit XML Report format. The default option values are set to create as few .xml files as possible. It is possible to save a single XML file, or an XML file for each top-level `describe`, or an XML file for each `describe` regardless of nesting.  
 
-    + **savePath** — Type: `String` Default: `""`  
+    + **savePath** : `String` — Default: `""`  
     Defines the directory path to save output report files. This directory will be automatically created if it does not already exist.  
 
-    + **filePrefix** — Type: `String` Default: `"junitresults-"`  
+    + **filePrefix** : `String` — Default: `"junitresults-"`  
     Defines the string value that is prepended to the XML output file. If `consolidateAll` is true, the default is simply `"junitresults"` and this becomes the actual filename, i.e. `"junitresults.xml"`.  
 
-    + **consolidateAll** — Type: `Boolean` Default: `true`  
+    + **consolidateAll** : `Boolean` — Default: `true`  
     Specifies whether to save all test results in a single file. If set to `true`, `filePrefix` is treated as the full file name (excluding extension).  
 
-    + **consolidate** — Type: `Boolean` Default: `true`  
+    + **consolidate** : `Boolean` — Default: `true`  
     Specifies whether to save nested describes within the same file as their parent. Setting to `true` does nothing if `consolidateAll` is also `true`. Setting to `false` will also set `consolidateAll` to `false`.  
 
-    + **useDotNotation** — Type: `Boolean` Default: `true`  
+    + **useDotNotation** : `Boolean` — Default: `true`  
     Specifies whether to separate suite names with dots instead of spaces. e.g. `Class.init` instead of `Class init`.  
 
-- **reporters.nunit**  
+- **reporters.nunit** : `Object`  
     NUnit XML Reporter that outputs test results to a file in NUnit XML Report format. Allows the test results to be used in java based CI systems like Jenkins.  
 
-    + **savePath** — Type: `String` Default: `""`  
+    + **savePath** : `String` — Default: `""`  
     Defines the directory path to save output report files. This directory will be automatically created if it does not already exist.  
 
-    + **filename** — Type: `String` Default: `"nunitresults.xml"`  
+    + **filename** : `String` — Default: `"nunitresults.xml"`  
     Defines the name of xml output file.  
 
-    + **reportName** — Type: `String` Default: `"Jasmine Results"`  
+    + **reportName** : `String` — Default: `"Jasmine Results"`  
     Defines the name for parent test-results node.  
 
-- **reporters.terminal**  
+- **reporters.terminal** : `Object`  
     Similar to the default console reporter but simpler.  
 
-    + **color** — Type: `Boolean` Default: `false`  
+    + **color** : `Boolean` — Default: `false`  
     Specifies whether the output should have colored text.  
 
-    + **verbosity** — Type: `Number` Default: `2`  
+    + **verbosity** : `Number` — Default: `2`  
     Specifies the verbosity level for the reporter output. Possible integer values: 0 to 3.  
 
-    + **showStack** — Type: `Boolean` Default: `false`  
+    + **showStack** : `Boolean` — Default: `false`  
     Specifies whether to show stack trace for failed specs.  
 
-- **reporters.teamcity**  
+- **reporters.teamcity** : `Boolean`  
     TeamCity Reporter that outputs test results for the Teamcity build system. There are no options to specify for this reporter. Just set this to `true` to enable the reporter.   
 
-- **reporters.tap**  
+- **reporters.tap** : `Boolean`  
     Reporter for Test Anything Protocol ([TAP](http://en.wikipedia.org/wiki/Test_Anything_Protocol)), that outputs tests results to console. There are no options to specify for this reporter. Just set this to `true` to enable the reporter.  
 
 
-#### customReporters
+**customReporters** : `Array` — Default: `undefined`  
 
-Type: `Array`  Default: `undefined`  
 Defines a list of custom Jasmine reporters to be used. Each item should be an initialized reporter instance with interfaces such as `jasmineDone`, `specDone`, etc...  
 
 ### Usage Example
