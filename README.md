@@ -40,17 +40,15 @@ The `--filter` option will filter the spec files by their **file names** that ma
 
 ### Options
 
-**specNameSuffix** : `String|Array` — Default: `"spec.js"`  
-
-Case-insensitive suffix(es) for the spec files, including the extension. Only files ending with this suffix will be executed within the specified `specs` destination(s).
-
-**helperNameSuffix** : `String|Array` — Default: `"helper.js"`  
-
-Case-insensitive suffix(es) for the helper files, including the extension. Only files ending with this suffix will be executed within the specified `helpers` destination(s).
+_**specNameSuffix** and **helperNameSuffix** options are **deprecated**. Use glob notation when defining spec and helper files for any task target._  
 
 **useHelpers** : `Boolean` — Default: `true`  
 
 Specifies whether to execute the helper files.
+
+**helpers** : `Array` — Default: `[]`  
+
+Defines the global helper files to be loaded before running specs. These helpers will be available to all task targets. If you need to define target-specific helpers, define them within the target definition object.
 
 **random** : `Boolean` — Default: `false`  
 
@@ -202,11 +200,11 @@ grunt.initConfig({
             },
             // spec files
             specs: [
-                "test/lib/**",
-                "test/core/**"
+                "test/lib/**/*.spec.js",
+                "test/core/**/*.spec.js"
             ],
             helpers: [
-                "test/helpers/**"
+                "test/helpers/**/*.helper.js"
             ]
         }
     }
