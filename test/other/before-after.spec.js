@@ -39,6 +39,7 @@
 
         it('should check foo', function () {
             expect(foo).toEqual(1);
+            expect(foo).toBeNumber();
         });
 
         it('should check bar', function () {

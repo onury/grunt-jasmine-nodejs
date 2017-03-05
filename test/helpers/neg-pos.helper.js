@@ -4,7 +4,7 @@ beforeEach(function () {
     jasmine.addMatchers({
         toBeNegative: function () {
             return {
-                compare: function (actual) { // (actual, expected)
+                compare: function (actual, expected) {
                     return {
                         pass: actual < 0
                     };
@@ -13,7 +13,7 @@ beforeEach(function () {
         },
         toBePositive: function () {
             return {
-                compare: function (actual) { // (actual, expected)
+                compare: function (actual, expected) {
                     return {
                         pass: actual >= 0
                     };
