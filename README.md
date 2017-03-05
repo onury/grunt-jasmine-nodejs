@@ -3,11 +3,12 @@
 [![version](http://img.shields.io/npm/v/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
 [![downloads](http://img.shields.io/npm/dm/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
 ![dependencies](https://david-dm.org/onury/grunt-jasmine-nodejs.svg)
-![license](http://img.shields.io/npm/l/grunt-jasmine-nodejs.svg)   
+![license](http://img.shields.io/npm/l/grunt-jasmine-nodejs.svg)
+![maintained](https://img.shields.io/maintenance/yes/2017.svg)   
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, Terminal Reporter, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
-> Author: Onur Yıldırım (onury) © 2016  
+> Author: Onur Yıldırım (onury) © 2017  
 > Licensed under the MIT License.  
 
 ![Example Screenshot](https://raw.github.com/onury/grunt-jasmine-nodejs/master/screenshots/verbose-report.jpg)
@@ -154,9 +155,9 @@ grunt.initConfig({
     jasmine_nodejs: {
         // task specific (default) options
         options: {
-            specNameSuffix: "spec.js", // also accepts an array
-            helperNameSuffix: "helper.js",
-            useHelpers: false,
+            useHelpers: true,
+            // global helpers, available to all task targets. accepts globs..
+            helpers: [],
             random: false,
             seed: null,
             defaultTimeout: null, // defaults to 5000
@@ -203,6 +204,7 @@ grunt.initConfig({
                 "test/lib/**/*.spec.js",
                 "test/core/**/*.spec.js"
             ],
+            // target-specific helpers
             helpers: [
                 "test/helpers/**/*.helper.js"
             ]
@@ -216,6 +218,15 @@ _Note: The target-level `reporters` object will override the task-level `reporte
 
 
 ## Change-Log
+
+- **v1.6.0** (2017-03-05)  
+    + **specNameSuffix** and **helperNameSuffix** options are **deprecated**. Use glob notation when defining spec and helper files for any task target.
+    + Added `helpers:Array` option that defines global helper files that are available to all task targets.
+    + Full file paths are now respected, (no need to match suffixes). Fixes [issue #39](https://github.com/onury/grunt-jasmine-nodejs/issues/39).  
+    + (#dev) Added more helper tests.
+    + Updated dependencies to their latest versions.
+
+    ---
 
 - **v1.5.4** (2016-08-21)  
     + Console Reporter: `cleanStack` option would render the first line as the error message, not respecting messages with `\n` (new-line) in them. Fixed.
