@@ -3,8 +3,11 @@
 {
     # task specific (default) options
     options: {
-        specNameSuffix: "spec.js", # also accepts an array
-        helperNameSuffix: "helper.js",
+        # specNameSuffix: "spec.js", # also accepts an array
+        # helperNameSuffix: "helper.js",
+        helpers: [
+            'test/type.helper.js'
+        ],
         useHelpers: false,
         random: false,
         seed: null,
@@ -16,7 +19,7 @@
             # console (default) reporter
             console: {
                 colors: true,
-                cleanStack: 1,       # (0|false)|(1|true)|2|3
+                cleanStack: 2,       # (0|false)|(1|true)|2|3
                 verbosity: 4,        # (0|false)|1|2|(3|true)|4
                 listStyle: "indent", # "flat"|"indent"
                 activity: true
@@ -46,7 +49,10 @@
     calc: {
         # target specific options
         options: {
-            useHelpers: true
+            useHelpers: true,
+            reporters: {
+                teamcity: true
+            }
         },
         # spec files
         specs: [
@@ -58,18 +64,32 @@
     },
     other: {
         options: {
+            useHelpers: true,
             reporters: {
                 console: {
                     colors: true,
                     cleanStack: 3,
-                    verbosity: 4,
+                    verbosity: 3,
                     listStyle: "indent",
                     activity: false
                 }
             }
         },
         specs: [
-            "test/other/**"
+            "test/other/**",
+            "test/calc.js"
+        ]
+    },
+    helpersTest: {
+        options: {
+            useHelpers: true
+        },
+        specs: [
+            "test/helpers.spec.js"
+        ],
+        helpers: [
+            # type.helper.js is included in top-level options
+            "test/helpers/**/*.js"
         ]
     }
 }

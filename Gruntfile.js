@@ -11,6 +11,7 @@ module.exports = function (grunt) {
     grunt.loadTasks('tasks');
 
     grunt.registerTask('single', ['jasmine_nodejs:other']);
+    grunt.registerTask('helpers', ['jasmine_nodejs:helpersTest']);
     grunt.registerTask('default', ['jasmine_nodejs:calc', 'jasmine_nodejs:other']);
 
 };
