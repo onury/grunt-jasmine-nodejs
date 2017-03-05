@@ -220,8 +220,8 @@ _Note: The target-level `reporters` object will override the task-level `reporte
 ## Change-Log
 
 - **v1.6.0** (2017-03-05)  
-    + **specNameSuffix** and **helperNameSuffix** options are **deprecated**. Use glob notation when defining spec and helper files for any task target.
-    + Added `helpers:Array` option that defines global helper files that are available to all task targets.
+    + **`specNameSuffix`** and **`helperNameSuffix`** options are **deprecated**. Use glob notation when defining spec and helper files for any task target.
+    + Added **`helpers:Array`** option that defines global helper files that are available to all task targets.
     + Full file paths are now respected, (no need to match suffixes). Fixes [issue #39](https://github.com/onury/grunt-jasmine-nodejs/issues/39).  
     + (#dev) Added more helper tests.
     + Updated dependencies to their latest versions.
