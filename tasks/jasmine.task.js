@@ -15,16 +15,17 @@ module.exports = function (grunt) {
     // Dep modules
     var reporters = require('jasmine-reporters'),
         JasmineConsoleReporter = require('jasmine-console-reporter'),
-        _ = require('lodash');
+        _ = require('lodash'),
+        glob = require('glob');
 
     // --------------------------------
     //  UTILITY METHODS
     // --------------------------------
 
-    function ensureArray(value, delim) {
-        return !Array.isArray(value)
-            ? (value || '').split(delim)
-            : value;
+    function normalizeSuffixes(suffixes) {
+        return typeof suffixes === 'string'
+            ? suffixes.split(',')
+            : (Array.isArray(suffixes) ? suffixes : null);
     }
 
     function endsWith(str, suffix) {
@@ -34,23 +35,41 @@ module.exports = function (grunt) {
     }
 
     function hasSuffix(suffixes, filePath) {
+        if (!filePath) return false;
         return (suffixes || []).some(function (suffix) {
-            return filePath
-                ? endsWith(filePath, suffix)
-                : false;
+            return endsWith(filePath, suffix);
         });
     }
 
-    function expand(glob, suffixes) {
-        var options = {
+    // TODO: suffixes are deprecated. We'll remove related stuff when we
+    // permanently drop suffixes.
+    function expand(patterns, suffixes) {
+        var globs = [],
+            nonGlobs = [];
+
+        // distinguish non-glob, full file paths so that we can add them without
+        // needing to check for a suffix-match.
+        patterns.forEach(function (pattern) {
+            if (glob.hasMagic(pattern)) {
+                globs.push(pattern);
+            } else if (grunt.file.isFile(pattern)) {
+                nonGlobs.push(pattern);
+            }
+        });
+
+        var suffixesDefined = Array.isArray(suffixes) && suffixes.length > 0;
+        var expandOptions = {
             // matchBase: true,
             filter: function (filePath) {
                 return grunt.file.isFile(filePath)
-                    && hasSuffix(suffixes, filePath.toLowerCase());
+                    && (!suffixesDefined || hasSuffix(suffixes, filePath.toLowerCase()));
             }
         };
-        // filter and expand glob
-        var files = grunt.file.expand(options, glob);
+
+        // filter and expand globs
+        var files = grunt.file.expand(expandOptions, globs);
+        // concat non-glob file paths
+        files = files.concat(nonGlobs);
         // resolve file paths
         return files.map(function (file) {
             return path.resolve(file);
@@ -109,12 +128,15 @@ module.exports = function (grunt) {
             conf = grunt.config.get([this.name, this.target]);
 
         var options = task.options({
-            specNameSuffix: 'spec.js', // string or array
-            helperNameSuffix: 'helper.js',
+            // suffixes are deprecated. they no longer default to a predefined
+            // value so they must be explicitly set.
+            specNameSuffix: null, // 'spec.js',
+            helperNameSuffix: null, // 'helper.js',
+            helpers: [], // global helpers for all targets
             useHelpers: true,
             random: false,
             seed: null,
-            defaultTimeout: null, // defaults to 5000
+            defaultTimeout: null, // defaults to 5000 ms
             stopOnFailure: false,
             traceFatal: true,
             reporters: {}
@@ -272,7 +294,7 @@ module.exports = function (grunt) {
         // EXECUTE SPEC (and HELPER) FILES
 
         // Spec files
-        var specSuffixes = ensureArray(options.specNameSuffix, ','),
+        var specSuffixes = normalizeSuffixes(options.specNameSuffix),
             specFiles = expand(conf.specs || [], specSuffixes),
             gruntFilter = grunt.option('filter');
 
@@ -284,9 +306,12 @@ module.exports = function (grunt) {
         }
 
         // Helper files
-        if (options.useHelpers && options.helperNameSuffix) {
-            var helperSuffixes = ensureArray(options.helperNameSuffix, ',');
-            helperFiles = expand(conf.helpers || [], helperSuffixes);
+        grunt.verbose.writeln(options.useHelpers ? 'Loading helpers...' : 'Helpers are disabled!');
+        if (options.useHelpers) {
+            var helperSuffixes = normalizeSuffixes(options.helperNameSuffix);
+            // merge global and target helpers
+            helperFiles = (conf.helpers || []).concat(options.helpers || []);
+            helperFiles = expand(helperFiles, helperSuffixes);
             grunt.verbose.writeln('Helper Files:\n  ', helperFiles);
             jasmineRunner.loadHelpers(helperFiles);
         }
