@@ -1,4 +1,4 @@
-# grunt-jasmine-nodejs [![grunt](http://img.shields.io/badge/grunt-^0.4.5-orange.svg)](http://gruntjs.com)
+# grunt-jasmine-nodejs
 
 [![npm](http://img.shields.io/npm/v/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
 [![release](https://img.shields.io/github/release/onury/grunt-jasmine-nodejs.svg)](https://github.com/onury/grunt-jasmine-nodejs)
@@ -14,8 +14,6 @@ Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Defau
 ![Example Screenshot](https://raw.github.com/onury/grunt-jasmine-nodejs/master/screenshots/verbose-report.jpg)
 
 ## Getting Started
-
-This plugin requires Grunt `^0.4.5`
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
