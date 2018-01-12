@@ -5,9 +5,9 @@
 [![downloads](http://img.shields.io/npm/dm/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
 [![dependencies](https://david-dm.org/onury/grunt-jasmine-nodejs.svg)](https://david-dm.org/onury/grunt-jasmine-nodejs)
 [![license](http://img.shields.io/npm/l/grunt-jasmine-nodejs.svg)](https://github.com/onury/grunt-jasmine-nodejs/blob/master/LICENSE)
-[![maintained](https://img.shields.io/maintenance/yes/2017.svg)](https://github.com/onury/grunt-jasmine-nodejs/graphs/commit-activity)  
+[![maintained](https://img.shields.io/maintenance/yes/2018.svg)](https://github.com/onury/grunt-jasmine-nodejs/graphs/commit-activity)  
 
-> © 2017, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
+> © 2018, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, Terminal Reporter, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
