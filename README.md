@@ -10,7 +10,8 @@
 
 # :warning: DEPRECATED
 
-I stopped using Grunt (or Gulp) in my projects. Instead I'm using [**npm scripts**](https://docs.npmjs.com/misc/scripts). Why? You can read these articles which I agree with:
+I stopped using Grunt (or Gulp) in my projects. Instead I'm using [**npm scripts**](https://docs.npmjs.com/misc/scripts).  
+Why? You can read these articles which I agree with:
 - [Why I Left Gulp and Grunt for npm Scripts](https://medium.freecodecamp.org/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8) *by Cory House.*
 - [Why we should stop using Grunt & Gulp](https://www.keithcirkel.co.uk/why-we-should-stop-using-grunt/) *by Keith Cirkel.*
 - [Why npm Scripts?](https://css-tricks.com/why-npm-scripts/) *by Damon Bauer.*
