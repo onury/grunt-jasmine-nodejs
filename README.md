@@ -1,11 +1,5 @@
 # grunt-jasmine-nodejs
 
-[![npm](http://img.shields.io/npm/v/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
-[![release](https://img.shields.io/github/release/onury/grunt-jasmine-nodejs.svg)](https://github.com/onury/grunt-jasmine-nodejs)
-[![downloads](http://img.shields.io/npm/dm/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
-[![dependencies](https://david-dm.org/onury/grunt-jasmine-nodejs.svg)](https://david-dm.org/onury/grunt-jasmine-nodejs)
-[![license](http://img.shields.io/npm/l/grunt-jasmine-nodejs.svg)](https://github.com/onury/grunt-jasmine-nodejs/blob/master/LICENSE)
-
 > © 2018, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
 
 # :warning: DEPRECATED
