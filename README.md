@@ -5,17 +5,30 @@
 [![downloads](http://img.shields.io/npm/dm/grunt-jasmine-nodejs.svg)](https://www.npmjs.com/package/grunt-jasmine-nodejs)
 [![dependencies](https://david-dm.org/onury/grunt-jasmine-nodejs.svg)](https://david-dm.org/onury/grunt-jasmine-nodejs)
 [![license](http://img.shields.io/npm/l/grunt-jasmine-nodejs.svg)](https://github.com/onury/grunt-jasmine-nodejs/blob/master/LICENSE)
-[![maintained](https://img.shields.io/maintenance/yes/2018.svg)](https://github.com/onury/grunt-jasmine-nodejs/graphs/commit-activity)  
 
 > © 2018, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
+
+# :warning: DEPRECATED
+
+I stopped using Grunt (or Gulp) in my projects. Instead I'm using [**npm scripts**](https://docs.npmjs.com/misc/scripts). Why? You can read these articles which I agree with:
+- [Why I Left Gulp and Grunt for npm Scripts](https://medium.freecodecamp.org/why-i-left-gulp-and-grunt-for-npm-scripts-3d6853dd22b8) *by Cory House.*
+- [Why we should stop using Grunt & Gulp](https://www.keithcirkel.co.uk/why-we-should-stop-using-grunt/) *by Keith Cirkel.*
+- [Why npm Scripts?](https://css-tricks.com/why-npm-scripts/) *by Damon Bauer.*
+
+Also see:
+- [Introduction to npm Scripts](https://medium.freecodecamp.org/introduction-to-npm-scripts-1dbb2ae01633) *by Ajmal Siddiqui.*
+- [Awesome npm Scripts](https://github.com/RyanZim/awesome-npm-scripts) (repo)
+- [Awesome npm](https://github.com/sindresorhus/awesome-npm) (repo)
+
+***NOTE**: If you like the default reporter of this plugin, I'm still maintaining [Jasmine Console Reporter](https://github.com/onury/jasmine-console-reporter).*
+
+---
 
 Jasmine (v2.x) Grunt multi-task for NodeJS with built-in reporters such as Default (Console) Reporter, JUnit XML, NUnit XML, Terminal Reporter, TeamCity, TAP Reporter. Supports the latest Jasmine features such as `fdescribe`, `fit`, `beforeAll`, `afterAll`, etc...
 
 ![Example Screenshot](https://raw.github.com/onury/grunt-jasmine-nodejs/master/screenshots/verbose-report.jpg)
 
 ## Getting Started
-
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
 npm i grunt-jasmine-nodejs --save-dev
@@ -38,8 +51,6 @@ The `--filter` option will filter the spec files by their **file names** that ma
 `grunt jasmine_nodejs --filter=foo,bar`
 
 ### Options
-
-_**specNameSuffix** and **helperNameSuffix** options are **deprecated**. Use glob notation when defining spec and helper files for any task target._  
 
 **useHelpers** : `Boolean` — Default: `true`  
 
